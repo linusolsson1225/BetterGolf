@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterGolf", "BetterGolf\BetterGolf.csproj", "{D8C2C158-5B1D-4A25-BA8B-F27F8F915977}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{FF2DB07A-6DB8-410E-9437-567B601158EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8C2C158-5B1D-4A25-BA8B-F27F8F915977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8C2C158-5B1D-4A25-BA8B-F27F8F915977}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8C2C158-5B1D-4A25-BA8B-F27F8F915977}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8C2C158-5B1D-4A25-BA8B-F27F8F915977}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF2DB07A-6DB8-410E-9437-567B601158EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF2DB07A-6DB8-410E-9437-567B601158EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF2DB07A-6DB8-410E-9437-567B601158EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF2DB07A-6DB8-410E-9437-567B601158EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {62377E44-6A9A-4B25-8F9A-4228CAC444E5}
+	EndGlobalSection
+EndGlobal
