@@ -12,8 +12,8 @@ namespace Models
         public int ItemId { get; set; }
         public Item? Item { get; set; }
         public int Quantity { get; set; }
-        public decimal Price { get; set; }
-        public decimal Total => Price * Quantity;
+        public double Price { get; set; }
+        public double Total => Price * Quantity;
 
         private OrderRow(Item item, int quantity)
         {

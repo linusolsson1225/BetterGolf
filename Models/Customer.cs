@@ -15,6 +15,8 @@ namespace Models
         public string Email { get; set; }
         public List <Order> Orders { get; set; } = new();
 
+      
+
         private Customer(string firstname, string lastname, string email)
         {
             FirstName = firstname;

@@ -7,7 +7,7 @@
         public int CustomerId { get; set; }
         public Customer? Customer { get; set; }
         public string Status { get; set; }
-        public List<OrderRow> Items { get; set; } = new();
+        public List<OrderRow> OrderRows { get; set; } = new();
 
         private Order(Customer customer, List<OrderRow>? items = null)
         {
@@ -15,7 +15,7 @@
             CustomerId = customer.Id;
             OrderDate = DateTime.UtcNow;
             Status = "Pending";
-            Items = items ?? new List<OrderRow>();
+            OrderRows = items ?? new List<OrderRow>();
         }
 
         public static Order Create(Customer customer, List<OrderRow>? items = null)
