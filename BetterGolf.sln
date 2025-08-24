@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterGolf", "BetterGolf\BetterGolf.csproj", "{D8C2C158-5B1D-4A25-BA8B-F27F8F915977}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{FF2DB07A-6DB8-410E-9437-567B601158EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{FF2DB07A-6DB8-410E-9437-567B601158EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{8C6D08EF-7620-411E-9A0D-4E7E845E2E25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{88F3E16F-409E-4BD1-8C5F-AF82586F1765}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8C6D08EF-7620-411E-9A0D-4E7E845E2E25} = {8C6D08EF-7620-411E-9A0D-4E7E845E2E25}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +18,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D8C2C158-5B1D-4A25-BA8B-F27F8F915977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8C2C158-5B1D-4A25-BA8B-F27F8F915977}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8C2C158-5B1D-4A25-BA8B-F27F8F915977}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8C2C158-5B1D-4A25-BA8B-F27F8F915977}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FF2DB07A-6DB8-410E-9437-567B601158EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FF2DB07A-6DB8-410E-9437-567B601158EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF2DB07A-6DB8-410E-9437-567B601158EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF2DB07A-6DB8-410E-9437-567B601158EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C6D08EF-7620-411E-9A0D-4E7E845E2E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C6D08EF-7620-411E-9A0D-4E7E845E2E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C6D08EF-7620-411E-9A0D-4E7E845E2E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C6D08EF-7620-411E-9A0D-4E7E845E2E25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88F3E16F-409E-4BD1-8C5F-AF82586F1765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88F3E16F-409E-4BD1-8C5F-AF82586F1765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88F3E16F-409E-4BD1-8C5F-AF82586F1765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88F3E16F-409E-4BD1-8C5F-AF82586F1765}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

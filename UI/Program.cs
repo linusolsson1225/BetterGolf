@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
-
-
+using Data;
 
 namespace BetterGolf
 {
@@ -13,7 +11,8 @@ namespace BetterGolf
     {
         static void Main(string[] args)
         {
-            
+            DatabaseConnection databaseConnection = new DatabaseConnection();
+            databaseConnection.TestConnection();
 
         }
     }
