@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Data;
 using UI;
 
 namespace BetterGolf
@@ -12,8 +11,6 @@ namespace BetterGolf
     {
         static void Main(string[] args)
         {
-            DatabaseConnection databaseConnection = new DatabaseConnection();
-            databaseConnection.TestConnection();
             SeedDatabase seed = new SeedDatabase();
             seed.Seed();
 
