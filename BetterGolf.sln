@@ -3,17 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{FF2DB07A-6DB8-410E-9437-567B601158EF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterGolfASP", "BetterGolfASP\BetterGolfASP.csproj", "{ABAAC7FA-3F9E-4F27-986A-6F97FD9B59A7}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D5ED9C4F-DB4D-4614-B9EC-F4E0B1B9CB58} = {D5ED9C4F-DB4D-4614-B9EC-F4E0B1B9CB58}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB", "DB\DB.csproj", "{D5ED9C4F-DB4D-4614-B9EC-F4E0B1B9CB58}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FF2DB07A-6DB8-410E-9437-567B601158EF} = {FF2DB07A-6DB8-410E-9437-567B601158EF}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FF2DB07A-6DB8-410E-9437-567B601158EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF2DB07A-6DB8-410E-9437-567B601158EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF2DB07A-6DB8-410E-9437-567B601158EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF2DB07A-6DB8-410E-9437-567B601158EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ABAAC7FA-3F9E-4F27-986A-6F97FD9B59A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ABAAC7FA-3F9E-4F27-986A-6F97FD9B59A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABAAC7FA-3F9E-4F27-986A-6F97FD9B59A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABAAC7FA-3F9E-4F27-986A-6F97FD9B59A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5ED9C4F-DB4D-4614-B9EC-F4E0B1B9CB58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5ED9C4F-DB4D-4614-B9EC-F4E0B1B9CB58}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5ED9C4F-DB4D-4614-B9EC-F4E0B1B9CB58}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5ED9C4F-DB4D-4614-B9EC-F4E0B1B9CB58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

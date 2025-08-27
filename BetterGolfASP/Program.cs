@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using BetterGolfASP.DB;
 using DB;
+using static DB.Seed;
 
 
 var builder = WebApplication.CreateBuilder();
@@ -19,7 +21,7 @@ else
     connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
 }
 
-builder.Services.AddDbContext<Context>(options =>
+builder.Services.AddDbContext<Context>(options => 
     options.UseSqlServer(connection));
 
 var app = builder.Build();
