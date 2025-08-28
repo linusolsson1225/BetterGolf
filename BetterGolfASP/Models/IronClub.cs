@@ -1,12 +1,9 @@
 ﻿using Models;
-using static BetterGolfASP.Models.WoodClub;
-using static Models.GolfClub;
 
 namespace BetterGolfASP.Models
 {
     public class IronClub:GolfClub
     {
-        public int IronClubID { get; set; }
         public TypeOfIron IronType { get; set; }
 
         public enum TypeOfIron
@@ -15,12 +12,12 @@ namespace BetterGolfASP.Models
             CavityBack,
             MuscleBack,
         }
-
-        private IronClub(string name, string description, double price, int stock, double loft, TypeOfIron irontype, RightOrLeftHanded handedness) : base(name, description, price, stock, handedness)
+        protected IronClub() { }
+        private IronClub(string name, string description, double price, int stock, TypeOfIron irontype, RightOrLeftHanded handedness) : base(name, description, price, stock, handedness)
         {
             IronType = irontype;
         }
-        public static IronClub Create(string name, string description, double price, int stock, double loft, TypeOfIron typeOfIron, RightOrLeftHanded handedness)
+        public static IronClub Create(string name, string description, double price, int stock, TypeOfIron typeOfIron, RightOrLeftHanded handedness)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name is required.", nameof(name));
@@ -32,7 +29,7 @@ namespace BetterGolfASP.Models
                 throw new ArgumentException("Stock cannot be negative.", nameof(stock));
 
 
-            return new IronClub(name, description, price, stock, loft, typeOfIron, handedness);
+            return new IronClub(name, description, price, stock, typeOfIron, handedness);
         }
 
 

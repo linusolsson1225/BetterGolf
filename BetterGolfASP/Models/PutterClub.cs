@@ -20,13 +20,15 @@ namespace BetterGolfASP.Models
             Blade
         }
 
-        private PutterClub(string name, string description, double price, int stock, double loft, ShaftType typeOfShaft, PutterType typeOfPutter, RightOrLeftHanded handedness) : base(name, description, price, stock, handedness)
+        protected PutterClub() { }
+
+        private PutterClub(string name, string description, double price, int stock,  ShaftType typeOfShaft, PutterType typeOfPutter, RightOrLeftHanded handedness) : base(name, description, price, stock, handedness)
         {
             TypeOfShaft = typeOfShaft;
             TypeOfPutter = typeOfPutter;
         }
 
-        public static PutterClub Create(string name, string description, double price, int stock, double loft, ShaftType typeOfShaft, PutterType typeOfPutter, RightOrLeftHanded handedness)
+        public static PutterClub Create(string name, string description, double price, int stock, ShaftType typeOfShaft, PutterType typeOfPutter, RightOrLeftHanded handedness)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name is required.", nameof(name));
@@ -38,7 +40,7 @@ namespace BetterGolfASP.Models
                 throw new ArgumentException("Stock cannot be negative.", nameof(stock));
 
 
-            return new PutterClub(name, description, price, stock, loft, typeOfShaft, typeOfPutter, handedness);
+            return new PutterClub(name, description, price, stock, typeOfShaft, typeOfPutter, handedness);
         }
     }
 }

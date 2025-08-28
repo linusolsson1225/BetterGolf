@@ -13,7 +13,7 @@ namespace BetterGolfASP.Models
             Driver,
             Spoon
         }
-        
+        protected WoodClub() { }
         private WoodClub(string name, string description, double price, int stock, double loft, TypeOfWood typeOfWood, RightOrLeftHanded handedness):base(name, description, price, stock, handedness)
         {
             Loft = loft;

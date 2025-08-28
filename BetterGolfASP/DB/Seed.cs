@@ -27,6 +27,22 @@ namespace DB
                 context.Add(customer);
             }
 
+            var irons = new List<IronClub>();
+            irons.AddRange(
+                [
+                IronClub.Create("Taylormade P7TW", "Tiger Woods bladed irons with an soft feel",1499.9,10,IronClub.TypeOfIron.Blade,GolfClub.RightOrLeftHanded.Right),
+                IronClub.Create("Titliest CB", "Cavity back iron with a lot of creativity",1599.9,30,IronClub.TypeOfIron.CavityBack,GolfClub.RightOrLeftHanded.Right),
+                IronClub.Create("Cobra Darkspeed","Good improvement iron for higher handicapers",1399.9,50,IronClub.TypeOfIron.MuscleBack,GolfClub.RightOrLeftHanded.Left)
+
+                ]);
+
+            var putters = new List<PutterClub>();
+            putters.AddRange(
+                [
+                PutterClub.Create("L.A.B OZ.1","Zero torque putter, to get the ball to start straighter every time",599.9,20,PutterClub.ShaftType.Broomstick,PutterClub.PutterType.Mallet,GolfClub.RightOrLeftHanded.Right),
+                PutterClub.Create("Ping Anser", "Classic blade putter from Ping",299.9,40,PutterClub.ShaftType.Standard,PutterClub.PutterType.Blade,GolfClub.RightOrLeftHanded.Left)
+                ]);
+
             var woods = new List<WoodClub>();
             woods.AddRange(
                 [
@@ -39,22 +55,31 @@ namespace DB
                 context.Add(wood);
             }
 
-            OrderRow orderRow1 = OrderRow.Create(woods[2], 5);
-           
+            OrderRow orderRow1 = OrderRow.Create(irons[0], 1);
+            
+
             OrderRow orderRow2 = OrderRow.Create(woods[0], 1);
+
+            OrderRow orderRow3 = OrderRow.Create(putters[0],1);
+            OrderRow orderRow4 = OrderRow.Create(irons[2], 2);
+            OrderRow orderRow5 = OrderRow.Create(woods[1], 1);
+            OrderRow orderRow6 = OrderRow.Create(putters[1], 2);
 
             var orderRows1 = new List<OrderRow>();
             var orderRows2 = new List<OrderRow>();
 
             orderRows1.AddRange(
                 [
-                orderRow1
+                orderRow1,
+                orderRow2,
+                orderRow3
                 ]);
 
             orderRows2.AddRange(
                 [
-                orderRow1,
-                orderRow2
+                orderRow4,
+                orderRow5,
+                orderRow6
                 ]);
 
             context.Add(orderRow1);
@@ -63,6 +88,7 @@ namespace DB
             var orders = new List<Order>();
             orders.AddRange(
                 [
+                Order.Create(customers[0],orderRows1),
                 Order.Create(customers[1],orderRows2),
                 Order.Create(customers[2],orderRows1)
                 ]);

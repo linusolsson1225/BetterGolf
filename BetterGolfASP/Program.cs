@@ -25,12 +25,13 @@ builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(connection));
 
 var app = builder.Build();
-using (var scope = app.Services.CreateScope()) //Seeding DB
-{
-    var context = scope.ServiceProvider.GetRequiredService<Context>();
-    Seed seed = new Seed();
-    seed.SeedDB(context);
-}
+
+//using (var scope = app.Services.CreateScope()) //Seeding DB
+//{
+//    var context = scope.ServiceProvider.GetRequiredService<Context>();
+//    Seed seed = new Seed();
+//    seed.SeedDB(context);
+//}
 
 if (app.Environment.IsDevelopment())
 {
