@@ -59,11 +59,11 @@ namespace BetterGolfASP.DB
             }
         }
 
-        public int SaveChanges()
+        public async Task<int> SaveChangesAsync()
         {
             try
             {
-                return Context.SaveChanges();
+                return await Context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
             {

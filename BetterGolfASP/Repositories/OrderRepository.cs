@@ -18,14 +18,24 @@ namespace DB.Repositories
             _context = context;
         }
 
-        public Order GetById(int orderId)
+        public async Task<Order> GetByIdAsync(int orderId)
         {
-            var order = _context.Orders.FirstOrDefault(o => o.OrderID == orderId);
+            var order = await _context.Orders
+                .FirstOrDefaultAsync(o => o.OrderID == orderId);
 
             if (order == null)
-                throw new KeyNotFoundException($"Order not found.");
+                throw new KeyNotFoundException($"Order with ID {orderId} not found.");
 
             return order;
+        }
+        
+        public async Task<List<Order>> GetAllAsync()
+        {
+            var orders = await _context.Orders.ToListAsync();
+
+            if (orders == null)
+                throw new KeyNotFoundException("No orders found");
+            return orders;  
         }
     }
 }

@@ -4,14 +4,32 @@ using Models;
 
 namespace BetterGolfASP.Controllers
 {
-    public class OrderController: Controller
+    namespace BetterGolfASP.Controllers
     {
-        UoW unitOfWork = new UoW();
-        public void ChangeOrderStatus(int orderID, string orderStatus)
+        public class OrderController : Controller   
         {
-            Order order = (unitOfWork.OrderRepository.GetById(orderID));
-            order.Status = (orderStatus);
-            unitOfWork.SaveChanges();
+            private readonly UoW unitOfWork;
+
+            public OrderController(Context context)
+            {
+                unitOfWork = new UoW(context);
+            }
+
+            public async Task<IActionResult> Index()  
+            {
+                var orders = await unitOfWork.OrderRepository.GetAllAsync();
+                return View(orders);
+            }
+
+            public async Task<IActionResult> ChangeOrderStatus(int orderID, string orderStatus)
+            {
+                var order = await unitOfWork.OrderRepository.GetByIdAsync(orderID);
+                order.Status = orderStatus;
+                await unitOfWork.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
         }
     }
+
 }
