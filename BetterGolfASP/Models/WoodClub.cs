@@ -6,7 +6,7 @@ namespace BetterGolfASP.Models
     {
         public double Loft { get; set; }
         public TypeOfWood WoodType { get; set; }
-        
+
         public enum TypeOfWood
         {
             Hybrid,
@@ -14,7 +14,7 @@ namespace BetterGolfASP.Models
             Spoon
         }
         protected WoodClub() { }
-        private WoodClub(string name, string description, double price, int stock, double loft, TypeOfWood typeOfWood, RightOrLeftHanded handedness):base(name, description, price, stock, handedness)
+        private WoodClub(string name, string description, double price, int stock, double loft, TypeOfWood typeOfWood, RightOrLeftHanded handedness) : base(name, description, price, stock, handedness)
         {
             Loft = loft;
             WoodType = typeOfWood;
@@ -29,9 +29,9 @@ namespace BetterGolfASP.Models
 
             if (stock < 0)
                 throw new ArgumentException("Stock cannot be negative.", nameof(stock));
-            
 
-            return new WoodClub(name, description, price, stock, loft,typeOfWood,handedness);
+
+            return new WoodClub(name, description, price, stock, loft, typeOfWood, handedness);
         }
     }
 }

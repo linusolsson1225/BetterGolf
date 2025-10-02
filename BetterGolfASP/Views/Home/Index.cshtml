@@ -1,8 +1,89 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<BetterGolfASP.Models.GolfClub>
+
+@{
+    ViewBag.Title = "BetterGolf - Homepage";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Hero Section -->
+<div class="hero">
+    <img src="~/images/header_home.jpg" alt="Golf Hero">
+    <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
+        <h1 class="display-3 fw-bold">Welcome to Better Golf</h1>
+        <p class="lead">Premium golfclubs suited for your game</p>
+        <a href="@Url.Action("Index", "Products")" class="btn btn-lg btn-success">Shop now</a>
+    </div>
 </div>
+
+
+
+<!-- Categories -->
+<div class="container py-5">
+    <h2 class="text-center mb-4">Categories</h2>
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+             <a href="@Url.Action("Category", "Products", new { type = "woods" })" class="text-decoration-none text-dark">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="~/Content/images/woods.jpg" class="card-img-top" alt="Woods">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold">Woods</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="@Url.Action("Category", "Products", new { type = "putters"})" class="text-decoration-none text-dark">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="~/Content/images/putters.jpg" class="card-img-top" alt="Putters">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold">Putters</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="@Url.Action("Category", "Products", new {type = "irons"})" class="text-decoration-none text-dark">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="~/Content/images/irons.jpg" class="card-img-top" alt="Irons">
+                    <div class="card-body">
+                        <h5 class="card-title fw-semibold">Irons</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Products -->
+<div class="container py-5">
+    <h2 class="text-center mb-4">Featured Products</h2>
+    <div class="row g-4">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var product in Model)
+            {
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm border-0">
+                        @* Uncomment when you have ImageUrl property *@
+                        @* <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name"> *@
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="text-success fw-bold">@product.Price.ToString("C")</p>
+                            <a href="@Url.Action("Details", "Products", new { id = product.GolfClubID })"
+                               class="btn btn-sm btn-outline-success">View</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-center">No products found.</p>
+        }
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-4 mt-5">
+    <p class="mb-1">&copy; 2025 BetterGolf</p>
+    <p class="small">Contact us: info@bettergolf.com | Phone: +1 555 123 456</p>
+</footer>

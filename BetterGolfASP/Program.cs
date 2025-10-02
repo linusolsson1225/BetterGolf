@@ -16,11 +16,11 @@ if (builder.Environment.IsDevelopment())
 {
     builder.Configuration.AddEnvironmentVariables()
                          .AddJsonFile("appsettings.Development.json");
-    connection = builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
+    connection = builder.Configuration.GetConnectionString("DefaultConnection");
 }
 else
 {
-    connection = Environment.GetEnvironmentVariable("AZURE_SQL_CONNECTIONSTRING");
+    connection = Environment.GetEnvironmentVariable("DefaultConnection");
 }
 
 builder.Services.AddDbContext<Context>(options =>
@@ -57,5 +57,11 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/openapi/v1.json", "v1");
     });
 }
-
+//using (var scope = app.Services.CreateScope())
+//{
+//    var context = scope.ServiceProvider.GetRequiredService<Context>();
+//    Seed seed = new Seed();
+//    seed.SeedDB(context);
+//}
 app.Run();
+

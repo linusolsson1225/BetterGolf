@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static BetterGolfASP.Models.WoodClub;
 
-namespace Models
+namespace BetterGolfASP.Models
 {
     public abstract class GolfClub
     {
@@ -29,7 +29,7 @@ namespace Models
             Stock = stock;
             Handedness = handedness;
         }
-        
+
 
     }
 }

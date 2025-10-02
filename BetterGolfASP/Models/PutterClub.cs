@@ -3,7 +3,7 @@ using static BetterGolfASP.Models.WoodClub;
 
 namespace BetterGolfASP.Models
 {
-    public class PutterClub:GolfClub
+    public class PutterClub : GolfClub
     {
         public ShaftType TypeOfShaft { get; set; }
         public PutterType TypeOfPutter { get; set; }
@@ -22,7 +22,7 @@ namespace BetterGolfASP.Models
 
         protected PutterClub() { }
 
-        private PutterClub(string name, string description, double price, int stock,  ShaftType typeOfShaft, PutterType typeOfPutter, RightOrLeftHanded handedness) : base(name, description, price, stock, handedness)
+        private PutterClub(string name, string description, double price, int stock, ShaftType typeOfShaft, PutterType typeOfPutter, RightOrLeftHanded handedness) : base(name, description, price, stock, handedness)
         {
             TypeOfShaft = typeOfShaft;
             TypeOfPutter = typeOfPutter;

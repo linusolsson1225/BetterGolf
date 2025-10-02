@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BetterGolfASP.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250828161340_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250929170334_initialcreate")]
+    partial class initialcreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

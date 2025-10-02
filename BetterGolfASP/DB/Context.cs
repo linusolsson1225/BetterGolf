@@ -4,7 +4,7 @@ using Models;
 
 namespace BetterGolfASP.DB
 {
-    public class Context: DbContext
+    public class Context : DbContext
     {
         public Context(DbContextOptions<Context> options) : base(options) { }
         public DbSet<Customer> Customers { get; set; }
@@ -19,7 +19,7 @@ namespace BetterGolfASP.DB
         {
             base.OnModelCreating(modelBuilder);
 
-            
+
             modelBuilder.Entity<GolfClub>()
                 .HasDiscriminator<string>("ClubType")
                 .HasValue<IronClub>("Iron")

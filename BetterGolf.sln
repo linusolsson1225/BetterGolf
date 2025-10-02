@@ -5,6 +5,11 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterGolfASP", "BetterGolfASP\BetterGolfASP.csproj", "{ABAAC7FA-3F9E-4F27-986A-6F97FD9B59A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingBackEndBetterGolf", "TestingBackEndBetterGolf\TestingBackEndBetterGolf.csproj", "{F313D81B-FE03-4003-BC29-4C92FBAD9AB7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ABAAC7FA-3F9E-4F27-986A-6F97FD9B59A7} = {ABAAC7FA-3F9E-4F27-986A-6F97FD9B59A7}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +20,10 @@ Global
 		{ABAAC7FA-3F9E-4F27-986A-6F97FD9B59A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABAAC7FA-3F9E-4F27-986A-6F97FD9B59A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABAAC7FA-3F9E-4F27-986A-6F97FD9B59A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F313D81B-FE03-4003-BC29-4C92FBAD9AB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F313D81B-FE03-4003-BC29-4C92FBAD9AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F313D81B-FE03-4003-BC29-4C92FBAD9AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F313D81B-FE03-4003-BC29-4C92FBAD9AB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

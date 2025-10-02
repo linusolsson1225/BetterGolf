@@ -2,7 +2,7 @@
 
 namespace BetterGolfASP.Models
 {
-    public class IronClub:GolfClub
+    public class IronClub : GolfClub
     {
         public TypeOfIron IronType { get; set; }
 

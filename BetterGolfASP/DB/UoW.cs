@@ -24,12 +24,13 @@ namespace BetterGolfASP.DB
         public WoodClubRepository WoodClubRepository { get; private set; }
         public IronClubRepository IronClubRepository { get; private set; }
         public PutterClubRepository PutterClubRepository { get; private set; }
+        public GolfClubsRepository GolfClubRepository { get; private set; }
         
 
         public UoW(Context context)
         {
             Context = context;
-            
+            GolfClubRepository = new GolfClubsRepository(context);
             CustomerRepository = new CustomerRepository(context);
             OrderRepository = new OrderRepository(context);
             OrderRowRepository = new OrderRowRepository(context);
