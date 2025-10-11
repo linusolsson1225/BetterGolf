@@ -19,7 +19,7 @@ namespace BetterGolfASP.Repositories
                 .FirstOrDefaultAsync(o => o.GolfClubID == golfClubId);
 
             if (golfClub == null)
-                throw new KeyNotFoundException($"Order with ID {golfClubId} not found.");
+                throw new KeyNotFoundException($"Golfclub wiht product id of {golfClubId} not found.");
 
             return golfClub;
         }

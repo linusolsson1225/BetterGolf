@@ -12,6 +12,9 @@ namespace BetterGolfASP.Models
             CavityBack,
             MuscleBack,
         }
+
+        
+
         protected IronClub() { }
         private IronClub(string name, string description, double price, int stock, TypeOfIron irontype, RightOrLeftHanded handedness) : base(name, description, price, stock, handedness)
         {

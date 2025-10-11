@@ -46,12 +46,11 @@ namespace BetterGolfASP.DB
             disposeContext = true;
         }
 
-        public void Update<T>(T entity)
-            where T : class
+        public void Update<T>(T entity) where T : class
         {
             try
             {
-                Context.Update(entity);
+                Context.Set<T>().Update(entity);
             }
             catch (Exception ex)
             {
@@ -59,6 +58,8 @@ namespace BetterGolfASP.DB
                 throw;
             }
         }
+
+
 
         public async Task<int> SaveChangesAsync()
         {

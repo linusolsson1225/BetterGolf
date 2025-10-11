@@ -1,0 +1,16 @@
+﻿@model BetterGolfASP.Models.GolfClub
+
+<div class="container py-5">
+    <h2 class="text-center mb-4">Upload Image for @Model.Name</h2>
+
+    <form asp-action="UploadImage" asp-controller="Products" enctype="multipart/form-data" method="post" class="w-50 mx-auto">
+        <div class="mb-3">
+            <label for="file" class="form-label">Select Image</label>
+            <input type="file" name="file" class="form-control" accept="image/*" required />
+        </div>
+
+        <input type="hidden" name="id" value="@Model.GolfClubID" />
+
+        <button type="submit" class="btn btn-success w-100">Upload</button>
+    </form>
+</div>

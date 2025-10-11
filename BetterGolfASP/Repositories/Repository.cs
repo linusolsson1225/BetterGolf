@@ -25,7 +25,6 @@ namespace DB.Repositories
         {
             Context.Add(entity);
         }
-
         /// <summary>
         ///  Remove an entity from the Table.
         /// </summary>

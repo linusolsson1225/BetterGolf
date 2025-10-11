@@ -38,7 +38,7 @@ html, body {
 .hero {
     position: relative;
     width: 100%;
-    height: 100vh; /* full screen height */
+    height: 50vh; /* full screen height */
     overflow: hidden;
 }
 
@@ -61,6 +61,117 @@ html, body {
 
     .hero .position-absolute {
         z-index: 2;
-        padding: 0 15px; /* lite padding på mobil */
+        padding: 0 15px;
     }
+
+
+
+/*CATEGORY CARDS*/
+.category-card img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    border-radius: 12px 12px 0 0; 
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover img {
+    transform: scale(1.05); 
+}
+/*PRODUCT CARS*/
+.product-card img {
+    width: 100%; 
+    height: 325px; 
+    object-fit: cover; 
+    border-radius: 12px 12px 0 0; 
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover img {
+    transform: scale(1.03); /* liten zoom-effekt vid hover */
+}
+
+
+/*PRODUCT CATEGORY CARDS*/
+.product-image-wrapper {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .product-image-wrapper:hover {
+        transform: scale(1.03);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+/* badgesize navbar */
+#cart-count {
+    background-color: #28a745;  redan grön 
+    color: white;
+    border-radius: 50%;  rund 
+    padding: 0.25rem 0.37rem;  finjustera så höjd = bredd 
+    font-size: 0.65rem;
+    font-weight: 600;
+    transform: translate(-100%, -100%);
+    display: inline-block;
+    text-align: center;
+    line-height: 1;
+}
+
+
+/* Offcanvas-bredd */
+.offcanvas.offcanvas-end {
+    max-width: 420px;
+}
+/* Cart badge */
+#cart-count {
+    background-color: #28a745;
+    color: white;
+    border-radius: 50%;
+    padding: 0.25rem 0.37rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1;
+}
+
+/* Plus / minus buttons */
+.cart-quantity-btn {
+    background: none;
+    border: none;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 0.25rem;
+    font-size: 1.2rem;
+    transition: color 0.2s;
+}
+
+    .cart-quantity-btn:hover {
+        color: #808080
+    }
+
+/* Cart items */
+.cart-item {
+    /*display: flex;*/
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+    .cart-item .cart-item-left {
+        /*display: flex;*/
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .cart-item img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+    }
+
+    .cart-item .cart-item-right {
+       /* display: flex;*/
+        align-items: center;
+        gap: 0.5rem;
+    }
+
 

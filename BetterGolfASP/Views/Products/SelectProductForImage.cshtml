@@ -1,0 +1,19 @@
+﻿@model IEnumerable<BetterGolfASP.Models.GolfClub>
+
+<div class="container py-5">
+    <h2 class="text-center mb-4">Select a product to upload an image</h2>
+    <div class="row g-4">
+        @foreach (var club in Model)
+        {
+            <div class="col-md-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@club.Name</h5>
+                        <a href="@Url.Action("UploadImage", "Products", new { id = club.GolfClubID })"
+                           class="btn btn-success mt-2">Upload Image</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

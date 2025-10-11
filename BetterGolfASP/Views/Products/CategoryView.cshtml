@@ -1,18 +1,23 @@
 ﻿@model IEnumerable<BetterGolfASP.Models.GolfClub>
 
-<h2>@ViewBag.Category</h2>
+@{
+    ViewBag.Title = $"BetterGolf - {ViewBag.Category}";
+}
 
-<div class="row g-4">
-    @foreach (var club in Model)
-    {
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="card h-100 shadow-sm border-0">
-                <div class="card-body text-center">
-                    <h5 class="card-title">@club.Name</h5>
-                    <p class="text-success fw-bold">@club.Price.ToString("C")</p>
-                    <a href="@Url.Action("Details", "Products", new { id = club.GolfClubID })" class="btn btn-sm btn-outline-success">View</a>
-                </div>
-            </div>
-        </div>
-    }
+<div class="container py-5">
+    <h2 class="text-center mb-4">Featured Products</h2>
+    <div class="row g-4">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var product in Model)
+            {
+                @await Html.PartialAsync("_ProductCard", product)
+            }
+        }
+        else
+        {
+            <p class="text-center">No products found.</p>
+        }
+    </div>
 </div>
+

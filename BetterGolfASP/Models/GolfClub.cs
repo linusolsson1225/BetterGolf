@@ -20,6 +20,8 @@ namespace BetterGolfASP.Models
             Right,
             Left
         }
+        public string? ImageUrl { get; set; }
+
         protected GolfClub() { }
         public GolfClub(string name, string description, double price, int stock, RightOrLeftHanded handedness)
         {
