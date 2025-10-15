@@ -1,4 +1,7 @@
-﻿using BetterGolfASP.Models;
+﻿using BetterGolfASP.Controllers;
+using BetterGolfASP.DB;
+using BetterGolfASP.Models;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace BetterGolfASP.Services
@@ -7,12 +10,15 @@ namespace BetterGolfASP.Services
     {
         private readonly IHttpContextAccessor _httpcontextAccessor;
         private const string CartSessionKey = "ShoppingCart";
-        
+        private readonly ILogger<ShoppingCartService> _logger;
+        private readonly UoW _unitOfWork;
         private ISession Session => _httpcontextAccessor.HttpContext.Session;
 
-        public ShoppingCartService(IHttpContextAccessor httpContextAccessor)
+        public ShoppingCartService(IHttpContextAccessor httpContextAccessor, ILogger<ShoppingCartService> logger, Context context)
         {
             _httpcontextAccessor = httpContextAccessor;
+            _logger = logger;
+            _unitOfWork = new UoW(context);
         }
         
         public List<CartItem> GetItems()
@@ -30,8 +36,13 @@ namespace BetterGolfASP.Services
             Session.SetString(CartSessionKey,JsonConvert.SerializeObject(items));
         }
 
-        public void AddItemToCart(GolfClub club,int quantity)
+        public async Task AddItemToCart(int productId,int quantity)
         {
+            var club = await _unitOfWork.GolfClubRepository.GetByIdAsync(productId);
+            if (club == null)
+            {
+                throw new KeyNotFoundException($"Golf club with ID {productId} not found");
+            }
             var items = GetItems();
             var existingItem = items.FirstOrDefault(x=>x.ProductID == club.GolfClubID);
             if (existingItem != null)

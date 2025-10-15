@@ -19,8 +19,8 @@ namespace BetterGolfASP.Repositories
                 .FirstOrDefaultAsync(o => o.GolfClubID == golfClubId);
 
             if (golfClub == null)
-                throw new KeyNotFoundException($"Golfclub wiht product id of {golfClubId} not found.");
-
+                throw new KeyNotFoundException($"Golf club wiht product id of {golfClubId} not found.");
+             
             return golfClub;
         }
         public async Task<IEnumerable<T>>GetAllByTypeAsync<T>()
@@ -29,7 +29,7 @@ namespace BetterGolfASP.Repositories
                 OfType<T>().
                 ToListAsync();
             if (golfClubs == null)
-                throw new KeyNotFoundException("No golfclubs found.");
+                throw new KeyNotFoundException("No golf clubs found.");
             return golfClubs;
         }
         public async Task<List<GolfClub>> GetAllAsync()
@@ -37,7 +37,7 @@ namespace BetterGolfASP.Repositories
             var golfClubs = await _context.GolfClubs.ToListAsync();
 
             if (golfClubs == null)
-                throw new KeyNotFoundException("No orders found.");
+                throw new KeyNotFoundException("No golf clubs.");
             return golfClubs;
         }
     }

@@ -7,10 +7,9 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Lägg till controllers + views
 builder.Services.AddControllersWithViews();
 
-// Lägg till DbContext
+//DBContext
 var connection = builder.Environment.IsDevelopment()
     ? builder.Configuration.GetConnectionString("DefaultConnection")
     : Environment.GetEnvironmentVariable("DefaultConnection");
@@ -18,10 +17,10 @@ var connection = builder.Environment.IsDevelopment()
 builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(connection));
 
-// Session kräver cache
+
 builder.Services.AddDistributedMemoryCache();
 
-// Lägg till session
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -29,14 +28,16 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-// Andra services
+//Services
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ShoppingCartService>();
+builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<AdminService>();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Middleware-pipelinen
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -48,11 +49,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Viktigt: Session innan Authorization
+
 app.UseSession();
 app.UseAuthorization();
 
-// Route-mappning
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

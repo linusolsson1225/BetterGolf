@@ -10,12 +10,12 @@ namespace BetterGolfASP.Controllers
     {
         private readonly ShoppingCartService _shoppingCartService;
         private readonly ILogger<ShoppingCartController> _logger;
-        private readonly UoW _unitOfWork;
+
         public ShoppingCartController(ShoppingCartService shoppingCartService,ILogger<ShoppingCartController> logger,Context context)
         {
                 _shoppingCartService = shoppingCartService;
-                _logger = logger;
-                _unitOfWork = new UoW(context);
+            _logger = logger;
+                
         }
         
         public IActionResult Index()
@@ -27,18 +27,12 @@ namespace BetterGolfASP.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToCart(int productId, int quantity)
+        public async Task <IActionResult> AddToCart(int productId, int quantity)
         {
-            var club = await _unitOfWork.GolfClubRepository.GetByIdAsync(productId);
-            if (club==null)
-            {
-                return NotFound();
-            }
-            _shoppingCartService.AddItemToCart(club,quantity);
 
+            await _shoppingCartService.AddItemToCart(productId, quantity);
             var cartCount = _shoppingCartService.GetItems().Sum(x => x.Quantity);
             return Json(new { count = cartCount });
-            
         }
         
         [HttpPost]

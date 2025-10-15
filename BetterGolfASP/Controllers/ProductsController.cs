@@ -1,5 +1,6 @@
 ﻿using BetterGolfASP.DB;
 using BetterGolfASP.Models;
+using BetterGolfASP.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,15 +10,12 @@ namespace BetterGolfASP.Controllers
     {
         private readonly ILogger<ProductsController> _logger;
         private readonly UoW _unitOfWork;
-
-        public ProductsController(ILogger<ProductsController> logger, Context context)
+        private readonly ProductService _productService;
+        public ProductsController(ILogger<ProductsController> logger, Context context, ProductService productService)
         {
             _logger = logger;
             _unitOfWork = new UoW(context);
-        }
-        public async Task<IEnumerable<T>> GetAllByTypeAsync<T>() where T : GolfClub
-        {
-            return await _unitOfWork.GolfClubRepository.GetAllByTypeAsync<T>();
+            _productService = productService;
         }
 
         [HttpGet]
@@ -28,17 +26,17 @@ namespace BetterGolfASP.Controllers
             {
                 case "woods":
 
-                    clubs = await _unitOfWork.GolfClubRepository.GetAllByTypeAsync<WoodClub>();
+                    clubs = await _productService.GetAllByTypeAsync<WoodClub>();
                     break;
 
                 case "putters":
-                    clubs = await _unitOfWork.GolfClubRepository.GetAllByTypeAsync<PutterClub>();
+                    clubs = await _productService.GetAllByTypeAsync<PutterClub>();
                     break;
                 case "irons":
-                    clubs = await _unitOfWork.GolfClubRepository.GetAllByTypeAsync<IronClub>();
+                    clubs = await _productService.GetAllByTypeAsync<IronClub>();
                     break;
                 default:
-                    clubs = await _unitOfWork.GolfClubRepository.GetAllByTypeAsync<GolfClub>();
+                    clubs = await _productService.GetAllByTypeAsync<GolfClub>();
                     break;
             }
             ViewBag.Category = type;
@@ -46,66 +44,10 @@ namespace BetterGolfASP.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int Id)
         {
-            var product = await _unitOfWork.GolfClubRepository.GetByIdAsync(id);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-
+            var product = await _productService.GetDetailsAsync(Id);
             return View(product);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> UploadImage(int id)
-        {
-            var club = await _unitOfWork.GolfClubRepository.GetByIdAsync(id);
-            if (club == null) return NotFound();
-
-            return View(club);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> UploadImage(int id, IFormFile file)
-        {
-            if (file == null || file.Length == 0)
-            {
-                TempData["Error"] = "Please select an image.";
-                return RedirectToAction("UploadImage", new { id });
-            }
-
-            var club = await _unitOfWork.GolfClubRepository.GetByIdAsync(id);
-            if (club == null) return NotFound();
-            
-            var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "products");
-            if (!Directory.Exists(uploadsDir))
-                Directory.CreateDirectory(uploadsDir);
-
-            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
-            var filePath = Path.Combine(uploadsDir, fileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            club.ImageUrl = $"/images/products/{fileName}";
-            _unitOfWork.Update(club);
-            await _unitOfWork.SaveChangesAsync();
-
-            TempData["Success"] = "Image uploaded successfully!";
-            return RedirectToAction("Details", new { id = club.GolfClubID });
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> SelectProductForImage()
-        {
-            var clubs = await _unitOfWork.GolfClubRepository.GetAllAsync();
-            return View(clubs);
-        }
-
-
     }
 }

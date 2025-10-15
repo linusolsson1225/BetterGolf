@@ -1,4 +1,5 @@
-﻿async function updateCartCount() {
+﻿// Update Cart count
+async function updateCartCount() {
     try {
         const response = await fetch('/ShoppingCart/GetCartCount');
         const count = await response.json();
@@ -8,8 +9,8 @@
     }
 }
 
+// Add to cart
 document.addEventListener('DOMContentLoaded', function () {
-    // Add to cart
     document.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', async function () {
             const productId = this.dataset.id;
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
 
     // Remove from cart
     document.body.addEventListener('click', async function (e) {
