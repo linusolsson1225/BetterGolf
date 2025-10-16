@@ -1,12 +1,13 @@
 ﻿using BetterGolfASP.DB;
 using BetterGolfASP.Models;
+using BetterGolfASP.Models.Products;
 using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static BetterGolfASP.Models.WoodClub;
+using static BetterGolfASP.Models.Products.WoodClub;
 
 namespace DB
 {

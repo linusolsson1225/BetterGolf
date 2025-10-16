@@ -1,6 +1,6 @@
 ﻿using BetterGolfASP.DB;
 using Microsoft.AspNetCore.Mvc;
-using BetterGolfASP.Models;
+using BetterGolfASP.Models.Products;
 
 namespace BetterGolfASP.Services
 {

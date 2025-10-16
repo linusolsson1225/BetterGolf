@@ -1,5 +1,5 @@
 ﻿using BetterGolfASP.DB;
-using Models;
+using BetterGolfASP.Models.Order;
 using System;
 using System.Collections.Generic;
 using System.Linq;

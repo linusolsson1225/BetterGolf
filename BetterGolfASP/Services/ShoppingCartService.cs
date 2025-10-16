@@ -1,6 +1,6 @@
 ﻿using BetterGolfASP.Controllers;
 using BetterGolfASP.DB;
-using BetterGolfASP.Models;
+using BetterGolfASP.Domain.Cart;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 

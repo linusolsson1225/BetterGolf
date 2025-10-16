@@ -24,14 +24,6 @@ namespace BetterGolfASP.Controllers
             return View(featured);
         }
 
-        //private async Task<IEnumerable<GolfClub>> GetFeaturedProductsAsync()
-        //{
-        //    // Här kan du filtrera, t.ex. top 8 produkter eller produkter med IsFeatured=true
-        //    var allProducts = await _unitOfWork.GolfClubRepository.GetAllAsync();
-        //    var featured = allProducts.Take(8); // exempel: ta 8 produkter
-        //    return featured;
-        //}
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

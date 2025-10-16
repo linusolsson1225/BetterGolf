@@ -1,5 +1,5 @@
 ﻿using BetterGolfASP.DB;
-using BetterGolfASP.Models;
+using BetterGolfASP.Models.Products;
 using BetterGolfASP.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

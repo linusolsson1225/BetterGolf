@@ -1,5 +1,5 @@
 ﻿using BetterGolfASP.DB;
-using BetterGolfASP.Models;
+using BetterGolfASP.Models.Products;
 using DB.Repositories;
 using Models;
 

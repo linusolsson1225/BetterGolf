@@ -1,4 +1,6 @@
-﻿namespace Models
+﻿using Models;
+
+namespace BetterGolfASP.Models
 {
     public class Order
     {
