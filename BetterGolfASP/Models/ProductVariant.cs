@@ -8,31 +8,29 @@ namespace BetterGolfASP.Models
     {
         [Key]
         public int VariantID { get; set; }
-
-        [ForeignKey(nameof(Product))]
+        
         public int ProductID { get; set; }
         public Product Product { get; set; } = null!;
         public string AttributeName { get; private set; } = null!;
         public string AttributeValue { get; private set; } = null!;
         public int Stock { get; private set; }
-        public List<string> ImgUrls { get; private set; } = new();
+        //public List<string> ImgUrls { get; private set; } = new();
 
         protected ProductVariant() { } 
 
-        private ProductVariant(string attributeName, string attributeValue, int stock, List<string>? imgUrls = null)
+        private ProductVariant(string attributeName, string attributeValue, int stock)
         {
             AttributeName = attributeName;
             AttributeValue = attributeValue;
             Stock = stock;
-            ImgUrls = imgUrls ?? new List<string>();
+            
         }
 
         
         public static ProductVariant Create(
             string attributeName,
             string attributeValue,
-            int stock,
-            List<string>? imgUrls = null)
+            int stock)
         {
             if (string.IsNullOrWhiteSpace(attributeName))
                 throw new ArgumentException("Attribute name is required.", nameof(attributeName));
@@ -43,7 +41,7 @@ namespace BetterGolfASP.Models
             if (stock < 0)
                 throw new ArgumentException("Stock cannot be negative.", nameof(stock));
 
-            return new ProductVariant(attributeName, attributeValue, stock, imgUrls);
+            return new ProductVariant(attributeName, attributeValue, stock);
         }
     }
 }

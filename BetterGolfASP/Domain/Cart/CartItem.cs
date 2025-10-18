@@ -9,10 +9,10 @@ namespace BetterGolfASP.Domain.Cart
     {
         public int ProductID { get; set; }
         public string Name { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public int Quantity {  get; set; }
-        public string ImageUrl { get; set; }
-        private CartItem(int productID, string name, double price, int quantity, string imageUrl)
+        public string? ImageUrl { get; set; }
+        private CartItem(int productID, string name, decimal price, int quantity, string? imageUrl)
         {
             ProductID = productID;
             Name = name;
@@ -21,11 +21,8 @@ namespace BetterGolfASP.Domain.Cart
             ImageUrl = imageUrl;
             
         }
-        public CartItem()
-        {
-                
-        }
-        public static CartItem Create(int productID, string name, double price, int quantity, string imageUrl)
+        
+        public static CartItem Create(int productID, string name, decimal price, int quantity, string? imageUrl=null)
         {
             if (productID <= 0)
                 throw new ArgumentException("ProductID must be greater than zero.", nameof(productID));
@@ -35,8 +32,6 @@ namespace BetterGolfASP.Domain.Cart
                 throw new ArgumentException("Price must be greater than zero.", nameof(price));
             if (quantity <= 0)
                 throw new ArgumentException("Quantity can not be 0.", nameof(quantity));
-            if (string.IsNullOrWhiteSpace(imageUrl))
-                throw new ArgumentException("Image URL is required.", nameof(imageUrl));
 
             return new CartItem(productID, name, price, quantity, imageUrl);
         }

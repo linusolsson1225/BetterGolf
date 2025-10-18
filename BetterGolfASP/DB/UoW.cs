@@ -21,22 +21,18 @@ namespace BetterGolfASP.DB
         public CustomerRepository CustomerRepository { get; private set; }
         public OrderRepository OrderRepository { get; private set; }
         public OrderRowRepository OrderRowRepository { get; private set; }
-        public WoodClubRepository WoodClubRepository { get; private set; }
-        public IronClubRepository IronClubRepository { get; private set; }
-        public PutterClubRepository PutterClubRepository { get; private set; }
-        public GolfClubsRepository GolfClubRepository { get; private set; }
+        public ProductRepository ProductRepository { get; private set; }
+        //public GolfClubsRepository GolfClubRepository { get; private set; }
         
 
         public UoW(Context context)
         {
             Context = context;
-            GolfClubRepository = new GolfClubsRepository(context);
+            //GolfClubRepository = new GolfClubsRepository(context);
             CustomerRepository = new CustomerRepository(context);
             OrderRepository = new OrderRepository(context);
             OrderRowRepository = new OrderRowRepository(context);
-            WoodClubRepository = new WoodClubRepository(context);
-            IronClubRepository = new IronClubRepository(context);
-            PutterClubRepository = new PutterClubRepository(context);
+            ProductRepository = new ProductRepository(context);
             
         }
 

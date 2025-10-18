@@ -1,5 +1,5 @@
 ﻿@using BetterGolfASP.Models.Products
-@model GolfClub
+@model Product
 
 @{
     ViewBag.Title = Model.Name + " - BetterGolf";
@@ -8,7 +8,7 @@
 <div class="container py-5">
     <div class="row g-5 align-items-center">
         <!-- Produktbild -->
-        <div class="col-md-6 text-center">
+       @*  <div class="col-md-6 text-center">
             <div class="product-image-wrapper border rounded-4 shadow-sm p-3 bg-white">
                 @if (!string.IsNullOrEmpty(Model.ImageUrl))
                 {
@@ -19,7 +19,7 @@
                     <p class="text-muted">No image uploaded yet.</p>
                 }
             </div>
-        </div>
+        </div> *@
 
         <!-- Produktinformation -->
         <div class="col-md-6">
@@ -42,17 +42,14 @@
 
             <hr>
 
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Handedness:</label>
-                <p>@Model.Handedness</p>
-            </div>
+            
 
             <div class="d-flex gap-3">
                 <button class="btn btn-success add-to-cart"
-                        data-id="@Model.GolfClubID"
+                        data-id="@Model.ProductID"
                         data-name="@Model.Name"
                         data-price="@Model.Price"
-                        data-image-url="@Model.ImageUrl"
+                        @* data-image-url="@Model.ImageUrl" *@
                         data-quantity="1">
                     Add to Cart
                 </button>

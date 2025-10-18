@@ -18,11 +18,11 @@ namespace BetterGolfASP.Services
 
         public async Task<IEnumerable<T>> GetAllByTypeAsync<T>() where T : GolfClub
         {
-            return await _unitOfWork.GolfClubRepository.GetAllByTypeAsync<T>();
+            return await _unitOfWork.ProductRepository.GetByTypeAsync<T>();
         }
-        public async Task<GolfClub> GetDetailsAsync(int productId)
+        public async Task<Product> GetDetailsAsync(int productId)
         {
-            var product = await _unitOfWork.GolfClubRepository.GetByIdAsync(productId);
+            var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
 
             if (product == null)
             {
@@ -30,6 +30,10 @@ namespace BetterGolfASP.Services
             }
 
             return (product);
+        }
+        public async Task<IEnumerable<Product>> GetAllAsync()
+        {
+            return await _unitOfWork.ProductRepository.GetAllAsync();
         }
     }
 }

@@ -6,14 +6,9 @@ namespace BetterGolfASP.Models.Products
     {
         [Key]
         public int ProductID { get; set; }
-
-        [Required]
         public string Name { get; set; } = null!;
-
-        [Required]
         public string Description { get; set; } = null!;
 
-        [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
 
         public int? Stock { get; set; }

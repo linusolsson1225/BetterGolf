@@ -32,7 +32,7 @@ namespace BetterGolfASP.Models.Products
 
             return new WoodClub(name, description, price, typeOfWood, handedness, imgUrls?.ToList());
         }
-        public ProductVariant AddLoftVariant(decimal loft, int stock)
+        public ProductVariant AddLoftVariant(double loft, int stock)
         {
             if (loft <= 0)
                 throw new ArgumentException("Loft must be greater than 0",nameof(loft));

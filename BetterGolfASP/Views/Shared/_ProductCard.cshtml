@@ -1,16 +1,16 @@
 ﻿@using BetterGolfASP.Models.Products
-@model GolfClub
+@model Product
 
 <div class="col-sm-6 col-md-4 col-lg-3">
     <div class="card h-100 shadow-sm border-0 product-card">
-        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        @* @if (!string.IsNullOrEmpty(Model.ImageUrl))
         {
             <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Name">
-        }
+        } *@
         <div class="card-body text-center">
             <h5 class="card-title">@Model.Name</h5>
             <p class="text-success fw-bold">@Model.Price.ToString("C")</p>
-            <a href="@Url.Action("Details", "Products", new { id = Model.GolfClubID })"
+            <a href="@Url.Action("Details", "Products"/* , new { id = Model.GolfClubID } */)"
                class="btn btn-sm btn-outline-success">View</a>
         </div>
     </div>

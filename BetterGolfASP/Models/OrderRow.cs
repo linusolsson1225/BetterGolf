@@ -10,32 +10,30 @@ namespace BetterGolfASP.Models
     public class OrderRow
     {
         public int OrderRowID { get; set; }
-        public int GolfclubID { get; set; }
-        public GolfClub? Golfclub { get; set; }
+        public int ProductID { get; set; }
+        public Product? Product { get; set; }
         public int Quantity { get; set; }
-        public double Price { get; set; }
-        public double Total => Price * Quantity;
+        public decimal Price { get; set; }
+        public decimal Total => Price * Quantity;
 
-        protected OrderRow() { }
+        protected OrderRow() { } 
 
-        private OrderRow(GolfClub Golfclub, int quantity)
+        private OrderRow(Product product, int quantity)
         {
-            this.Golfclub = Golfclub;
-            GolfclubID = Golfclub.GolfClubID;
+            Product = product ?? throw new ArgumentNullException(nameof(product));
+            ProductID = product.ProductID;
             Quantity = quantity;
-            Price = Golfclub.Price;
+            Price = product.Price;
         }
 
-        public static OrderRow Create(GolfClub item, int quantity)
+        public static OrderRow Create(Product product, int quantity)
         {
-            if (item == null)
-                throw new ArgumentNullException(nameof(item), "Item cannot be null.");
-
+            if (product == null)
+                throw new ArgumentNullException(nameof(product), "Product cannot be null.");
             if (quantity <= 0)
                 throw new ArgumentException("Quantity must be greater than zero.", nameof(quantity));
 
-            return new OrderRow(item, quantity);
+            return new OrderRow(product, quantity);
         }
-
     }
 }

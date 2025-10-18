@@ -1,5 +1,6 @@
 using BetterGolfASP.DB;
 using BetterGolfASP.Models;
+using BetterGolfASP.Services;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using System.Diagnostics;
@@ -10,16 +11,18 @@ namespace BetterGolfASP.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UoW _unitOfWork;
+        private ProductService _productService;
 
-        public HomeController(ILogger<HomeController> logger, Context context)
+        public HomeController(ILogger<HomeController> logger, Context context, ProductService productService)
         {
             _logger = logger;
             _unitOfWork = new UoW(context);
+            _productService = productService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var allClubs = await _unitOfWork.GolfClubRepository.GetAllAsync();
+            var allClubs = await _productService.GetAllAsync();
             var featured = allClubs.Take(8);
             return View(featured);
         }

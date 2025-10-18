@@ -23,29 +23,31 @@ namespace BetterGolfASP.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadImage(int id, IFormFile file)
-        {
-            try
-            {
-                var imageUrl = await _adminService.UploadProductImageAsync(id, file);
-                TempData["Success"] = "Image uploaded successfully!";
-                return RedirectToAction("Details", "Products", new { id }); ;
-            }
-            catch (ArgumentException ex)
-            {
-                TempData["Error"] = ex.Message;
-                return RedirectToAction("UploadImage", new { id });
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
-            catch (Exception)
-            {
-                TempData["Error"] = "Something went wrong while uploading the image.";
-                return RedirectToAction("UploadImage", new { id });
-            }
-        }
+        //FIXA NÄR BILDERNA ÄR FIXADE
+
+        //public async Task<IActionResult> UploadImage(int id, IFormFile file)
+        //{
+        //    try
+        //    {
+        //        var imageUrl = await _adminService.UploadProductImageAsync(id, file);
+        //        TempData["Success"] = "Image uploaded successfully!";
+        //        return RedirectToAction("Details", "Products", new { id }); ;
+        //    }
+        //    catch (ArgumentException ex)
+        //    {
+        //        TempData["Error"] = ex.Message;
+        //        return RedirectToAction("UploadImage", new { id });
+        //    }
+        //    catch (KeyNotFoundException)
+        //    {
+        //        return NotFound();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        TempData["Error"] = "Something went wrong while uploading the image.";
+        //        return RedirectToAction("UploadImage", new { id });
+        //    }
+        //}
 
         [HttpGet]
         public async Task<IActionResult> SelectProductForImage()

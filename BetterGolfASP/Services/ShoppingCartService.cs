@@ -38,13 +38,13 @@ namespace BetterGolfASP.Services
 
         public async Task AddItemToCart(int productId,int quantity)
         {
-            var club = await _unitOfWork.GolfClubRepository.GetByIdAsync(productId);
-            if (club == null)
+            var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
+            if (product == null)
             {
                 throw new KeyNotFoundException($"Golf club with ID {productId} not found");
             }
             var items = GetItems();
-            var existingItem = items.FirstOrDefault(x=>x.ProductID == club.GolfClubID);
+            var existingItem = items.FirstOrDefault(x=>x.ProductID == product.ProductID);
             if (existingItem != null)
             {
                 existingItem.Quantity += quantity;
@@ -52,7 +52,7 @@ namespace BetterGolfASP.Services
             else
             {
                 
-                var newItem = CartItem.Create(club.GolfClubID, club.Name, club.Price, quantity, club.ImageUrl);
+                var newItem = CartItem.Create(product.ProductID, product.Name, product.Price, quantity /*product.ImageUrl*/);
                 items.Add(newItem);
 
             }
@@ -68,10 +68,11 @@ namespace BetterGolfASP.Services
             }
             SaveItems(items);
         }
-        public double CalculateTotalPrice()
+        public decimal CalculateTotalPrice()
         {
-            var items = GetItems().ToList();
+            var items = GetItems(); 
             return items.Sum(x => x.Price * x.Quantity);
         }
+
     }
 }
