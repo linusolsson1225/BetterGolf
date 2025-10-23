@@ -1,0 +1,63 @@
+﻿@using BetterGolfASP.Models.Products
+@model Product
+
+<div class="container py-5">
+    <h2 class="text-center mb-4">Manage Images for @Model.Name</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="text-center mb-4">
+        <a asp-action="SelectProductForImage" asp-controller="Admin" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Product Selection
+        </a>
+        <a asp-action="UploadImage" asp-controller="Admin" asp-route-productId="@Model.ProductID" class="btn btn-success ms-2">
+            Upload New Image
+        </a>
+    </div>
+
+    @if (Model.ImgUrls != null && Model.ImgUrls.Any())
+    {
+        <h3 class="text-center mb-3">Existing Images (@Model.ImgUrls.Count())</h3>
+        <div class="row justify-content-center">
+            @foreach (var imageUrl in Model.ImgUrls)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+
+                        <img src="@imageUrl" class="card-img-top" alt="Product Image" style="height: 150px; object-fit: cover;">
+                        <div class="card-body p-2">
+                            <form asp-action="RemoveImage" asp-controller="Admin" method="post" class="mt-2">
+                                <input type="hidden" name="id" value="@Model.ProductID" />
+                                <input type="hidden" name="imageUrl" value="@imageUrl" />
+
+                                <button type="submit" class="btn btn-danger btn-sm w-100"
+                                        onclick="return confirm('Are you sure you want to remove this image? This action cannot be undone.');">
+                                    Remove Image
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center mt-4">
+            No images found for **@Model.Name**. Use the "Upload New Image" button above to add one.
+        </div>
+    }
+</div>

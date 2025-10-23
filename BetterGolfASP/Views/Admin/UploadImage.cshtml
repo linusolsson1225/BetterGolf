@@ -1,9 +1,43 @@
 ﻿@using BetterGolfASP.Models.Products
-@model GolfClub
+@model Product
 
 <div class="container py-5">
     <h2 class="text-center mb-4">Upload Image for @Model.Name</h2>
 
+ 
+    <div class="text-center mb-5">
+        <a asp-action="SelectProductForImage" asp-controller="Admin" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Product Selection
+        </a>
+
+        <a asp-action="ManageImages" asp-controller="Admin" asp-route-productId="@Model.ProductID" class="btn btn-success ms-2">
+            Manage Existing Images
+        </a>
+    </div>
+
+  
+    @if (Model.ImgUrls != null && Model.ImgUrls.Any())
+    {
+        <h3 class="text-center mb-3">Existing Images (@Model.ImgUrls.Count())</h3>
+        <div class="row justify-content-center mb-5">
+            @foreach (var imageUrl in Model.ImgUrls)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="@imageUrl" class="card-img-top" alt="Product Image" style="height: 150px; object-fit: cover;">
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center mt-4 mb-5 w-50 mx-auto">
+            No existing images found for **@Model.Name**.
+        </div>
+    }
+
+    <h3 class="text-center mb-3">Upload New Image</h3>
     <form asp-action="UploadImage" asp-controller="Admin" enctype="multipart/form-data" method="post" class="w-50 mx-auto">
         <div class="mb-3">
             <label for="file" class="form-label">Select Image</label>

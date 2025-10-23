@@ -20,46 +20,68 @@ namespace BetterGolfASP.Services
       
         public async Task<Product> GetProductAsync(int productId)
         {
-            var club = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
-            if (club == null)
-                throw new KeyNotFoundException($"Could not find club with {productId}");
+            var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
+            if (product == null)
+                throw new KeyNotFoundException($"Could not find product with {productId}");
 
-            return club;
+            return product;
         }
 
-       // FIXA SENARE MED LIST PÅ BILDER
+        public async Task<Product> RemoveImageAsync(int productId, string imageUrl)
+        {
+            var product = await GetProductAsync(productId);
+            bool wasRemoved = product.ImgUrls.Remove(imageUrl);
 
-        //public async Task<string> UploadProductImageAsync(int productId, IFormFile file)
-        //{
-        //    if (file == null || file.Length == 0)
-        //    {
-        //        throw new KeyNotFoundException($"Please Select an image.");
-        //    }
+            if (wasRemoved)
+            {
+                
+                await _unitOfWork.ProductRepository.UpdateAsync(product);
+                await _unitOfWork.SaveChangesAsync();
+            }
+            else
+            {
+                throw new KeyNotFoundException($"Image URL '{imageUrl}' not found for product {productId}.");
+            }
 
-        //    var club = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
-        //    if (club == null)
-        //        throw new KeyNotFoundException($"Could not find {productId}");
+            return product;
+        }
 
-        //    var uploadsDir = Path.Combine(_environment.WebRootPath, "images", "products");
-        //    if (!Directory.Exists(uploadsDir))
-        //        Directory.CreateDirectory(uploadsDir);
+        public async Task<string> UploadProductImageAsync(int productId, IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                
+                throw new ArgumentException("Please select an image.", nameof(file));
+            }
+            
+            var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
+            if (product == null)
+                throw new KeyNotFoundException($"Could not find product with ID: {productId}");
 
-        //    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
-        //    var filePath = Path.Combine(uploadsDir, fileName);
+            var uploadsDir = Path.Combine(_environment.WebRootPath, "images", "products");
+            if (!Directory.Exists(uploadsDir))
+                Directory.CreateDirectory(uploadsDir);
 
-        //    using (var stream = new FileStream(filePath, FileMode.Create))
-        //    {
-        //        await file.CopyToAsync(stream);
-        //    }
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var filePath = Path.Combine(uploadsDir, fileName);
 
-        //    club.ImageUrl = $"/images/products/{fileName}";
-        //    _unitOfWork.Update(club);
-        //    await _unitOfWork.SaveChangesAsync();
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
 
-        //    return club.ImageUrl;
-        //}
+            
+            var imageUrl = $"/images/products/{fileName}";
+            product.ImgUrls.Add(imageUrl);
 
-       
+            
+            await _unitOfWork.ProductRepository.UpdateAsync(product);
+            await _unitOfWork.SaveChangesAsync();
+
+            return imageUrl;
+        }
+
+
         public async Task<List<Product>> GetAllProductsAsync()
         {
             var clubs = await _unitOfWork.ProductRepository.GetAllAsync();

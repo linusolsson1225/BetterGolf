@@ -22,13 +22,13 @@ namespace BetterGolfASP.DB
         public OrderRepository OrderRepository { get; private set; }
         public OrderRowRepository OrderRowRepository { get; private set; }
         public ProductRepository ProductRepository { get; private set; }
-        //public GolfClubsRepository GolfClubRepository { get; private set; }
+ 
         
 
         public UoW(Context context)
         {
             Context = context;
-            //GolfClubRepository = new GolfClubsRepository(context);
+           
             CustomerRepository = new CustomerRepository(context);
             OrderRepository = new OrderRepository(context);
             OrderRowRepository = new OrderRowRepository(context);

@@ -1,20 +1,38 @@
 ﻿@using BetterGolfASP.Models.Products
-@model IEnumerable<GolfClub>
+@model IEnumerable<Product>
 
 <div class="container py-5">
-    <h2 class="text-center mb-4">Select a product to upload an image</h2>
-    @* <div class="row g-4">
-        @foreach (var club in Model)
+    <h2 class="text-center mb-4">Select a product to upload or manage images</h2>
+
+   
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="row g-4">
+        @foreach (var product in Model)
         {
             <div class="col-md-3">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body text-center">
-                        <h5 class="card-title">@club.Name</h5>
-                        <a href="@Url.Action("UploadImage", "Admin", new { productId = club.GolfClubID })"
-                           class="btn btn-success mt-2">Upload Image</a>
+                        <h5 class="card-title">@product.Name</h5>
+
+                       
+                        <a href="@Url.Action("UploadImage", "Admin", new { productId = product.ProductID })"
+                           class="btn btn-success w-100 mt-2">Upload Image</a>
+
+                        
+                        <a href="@Url.Action("ManageImages", "Admin", new { productId = product.ProductID })"
+                           class="btn btn-success w-100 mt-2">Manage Images</a>
+
                     </div>
                 </div>
             </div>
         }
-    </div> *@
+    </div>
 </div>

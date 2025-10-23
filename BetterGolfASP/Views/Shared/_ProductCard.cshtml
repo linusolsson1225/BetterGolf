@@ -10,7 +10,7 @@
         <div class="card-body text-center">
             <h5 class="card-title">@Model.Name</h5>
             <p class="text-success fw-bold">@Model.Price.ToString("C")</p>
-            <a href="@Url.Action("Details", "Products"/* , new { id = Model.GolfClubID } */)"
+            <a href="@Url.Action("Details", "Products", new { id = Model.ProductID })"
                class="btn btn-sm btn-outline-success">View</a>
         </div>
     </div>
