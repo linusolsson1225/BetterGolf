@@ -12,6 +12,10 @@ namespace BetterGolfASP.Domain.Cart
         public decimal Price { get; set; }
         public int Quantity {  get; set; }
         public string? ImageUrl { get; set; }
+        public CartItem()
+        {
+                
+        }
         private CartItem(int productID, string name, decimal price, int quantity, string? imageUrl)
         {
             ProductID = productID;
