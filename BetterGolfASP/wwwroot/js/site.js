@@ -84,7 +84,7 @@ document.body.addEventListener('click', async function (e) {
             const html = await response.text();
             document.getElementById('cart-body-placeholder').innerHTML = html;
 
-            // Uppdatera cart count också
+           
             const countResponse = await fetch('/ShoppingCart/GetCartCount');
             const count = await countResponse.json();
             document.getElementById('cart-count').innerText = count;
@@ -93,4 +93,24 @@ document.body.addEventListener('click', async function (e) {
         }
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const thumbnails = document.querySelectorAll(".thumbnail-img");
+    const mainImage = document.getElementById("mainProductImage");
+
+    if (!thumbnails.length || !mainImage) return;
+
+    // Markera första thumbnail som aktiv
+    thumbnails[0].classList.add("active");
+
+    thumbnails.forEach(img => {
+        img.addEventListener("click", () => {
+            mainImage.src = img.src;
+
+            thumbnails.forEach(t => t.classList.remove("active"));
+            img.classList.add("active");
+        });
+    });
+});
+
 

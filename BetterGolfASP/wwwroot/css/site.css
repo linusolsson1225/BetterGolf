@@ -174,7 +174,26 @@ html, body {
         gap: 0.5rem;
     }
 
+#mainProductImage {
+    width: 400px; 
+    height: 400px; 
+    object-fit: cover; 
+    border-radius: 8px;
+}
 
+.thumbnail-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.2s all;
+}
+
+    .thumbnail-img.active {
+        border: 2px solid #198754;
+        opacity: 0.85;
+    }
 
 
 
