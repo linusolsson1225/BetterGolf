@@ -1,4 +1,4 @@
-﻿using Models;
+﻿using BetterGolfASP.Models;
 
 namespace BetterGolfASP.Models.Products
 {

@@ -4,27 +4,14 @@ using BetterGolfASP.Models.Products;
 
 namespace BetterGolfASP.Services
 {
-    public class AdminService
+    public class AdminService(ILogger<AdminService> logger, Context context, IWebHostEnvironment environment)
     {
+        private readonly UoW _unitOfWork = new UoW(context);
 
-        private readonly ILogger<AdminService> _logger;
-        private readonly UoW _unitOfWork;
-        private readonly IWebHostEnvironment _environment;
-
-        public AdminService(ILogger<AdminService> logger, Context context, IWebHostEnvironment environment)
-        {
-            _logger = logger;
-            _unitOfWork = new UoW(context);
-            _environment = environment;
-        }
-      
         public async Task<Product> GetProductAsync(int productId)
         {
             var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
-            if (product == null)
-                throw new KeyNotFoundException($"Could not find product with {productId}");
-
-            return product;
+            return product ?? throw new KeyNotFoundException($"Could not find product with {productId}");
         }
 
         public async Task<Product> RemoveImageAsync(int productId, string imageUrl)
@@ -58,7 +45,7 @@ namespace BetterGolfASP.Services
             if (product == null)
                 throw new KeyNotFoundException($"Could not find product with ID: {productId}");
 
-            var uploadsDir = Path.Combine(_environment.WebRootPath, "images", "products");
+            var uploadsDir = Path.Combine(environment.WebRootPath, "images", "products");
             if (!Directory.Exists(uploadsDir))
                 Directory.CreateDirectory(uploadsDir);
 

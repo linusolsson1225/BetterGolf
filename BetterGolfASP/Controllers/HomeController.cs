@@ -2,7 +2,6 @@ using BetterGolfASP.DB;
 using BetterGolfASP.Models;
 using BetterGolfASP.Services;
 using Microsoft.AspNetCore.Mvc;
-using Models;
 using System.Diagnostics;
 
 namespace BetterGolfASP.Controllers

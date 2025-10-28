@@ -6,21 +6,12 @@ using Newtonsoft.Json;
 
 namespace BetterGolfASP.Services
 {
-    public class ShoppingCartService
+    public class ShoppingCartService(IHttpContextAccessor httpContextAccessor, ILogger<ShoppingCartService> logger, Context context)
     {
-        private readonly IHttpContextAccessor _httpcontextAccessor;
         private const string CartSessionKey = "ShoppingCart";
-        private readonly ILogger<ShoppingCartService> _logger;
-        private readonly UoW _unitOfWork;
-        private ISession Session => _httpcontextAccessor.HttpContext.Session;
+        private readonly UoW _unitOfWork = new UoW(context);
+        private ISession Session => httpContextAccessor.HttpContext.Session;
 
-        public ShoppingCartService(IHttpContextAccessor httpContextAccessor, ILogger<ShoppingCartService> logger, Context context)
-        {
-            _httpcontextAccessor = httpContextAccessor;
-            _logger = logger;
-            _unitOfWork = new UoW(context);
-        }
-        
         public List<CartItem> GetItems()
         {
             var data = Session.GetString(CartSessionKey);
@@ -52,7 +43,7 @@ namespace BetterGolfASP.Services
             else
             {
                 
-                var newItem = CartItem.Create(product.ProductID, product.Name, product.Price, quantity /*product.ImageUrl*/);
+                var newItem = CartItem.Create(product.ProductID, product.Name, product.Price, quantity, product.ImgUrls[0]);
                 items.Add(newItem);
 
             }

@@ -1,7 +1,6 @@
 ﻿using BetterGolfASP.Models;
 using BetterGolfASP.Models.Products;
 using Microsoft.EntityFrameworkCore;
-using Models;
 
 namespace BetterGolfASP.DB
 {

@@ -30,7 +30,7 @@ namespace BetterGolfASP.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderID"));
 
-                    b.Property<int>("CustomerID")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("OrderDate")
@@ -41,7 +41,7 @@ namespace BetterGolfASP.Migrations
 
                     b.HasKey("OrderID");
 
-                    b.HasIndex("CustomerID");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
                 });
@@ -146,11 +146,11 @@ namespace BetterGolfASP.Migrations
 
             modelBuilder.Entity("Models.Customer", b =>
                 {
-                    b.Property<int>("CustomerID")
+                    b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -164,7 +164,7 @@ namespace BetterGolfASP.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CustomerID");
+                    b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
                 });
@@ -233,7 +233,7 @@ namespace BetterGolfASP.Migrations
                 {
                     b.HasOne("Models.Customer", "Customer")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerID")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -9,12 +9,10 @@ namespace BetterGolfASP.Controllers
     public class ProductsController : Controller
     {
         private readonly ILogger<ProductsController> _logger;
-        private readonly UoW _unitOfWork;
         private readonly ProductService _productService;
         public ProductsController(ILogger<ProductsController> logger, Context context, ProductService productService)
         {
             _logger = logger;
-            _unitOfWork = new UoW(context);
             _productService = productService;
         }
 

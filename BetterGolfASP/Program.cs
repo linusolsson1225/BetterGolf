@@ -34,6 +34,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ShoppingCartService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<AdminService>();
+builder.Services.AddScoped<CheckOutService>();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();

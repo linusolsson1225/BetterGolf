@@ -1,4 +1,4 @@
-﻿using Models;
+﻿using BetterGolfASP.Models;
 using static BetterGolfASP.Models.Products.WoodClub;
 
 namespace BetterGolfASP.Models.Products

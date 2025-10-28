@@ -1,4 +1,4 @@
-﻿using Models;
+﻿using BetterGolfASP.Models;
 
 namespace BetterGolfASP.Models
 {
@@ -26,7 +26,7 @@ namespace BetterGolfASP.Models
         private Order(Customer customer, List<OrderRow> items)
         {
             Customer = customer ?? throw new ArgumentNullException(nameof(customer));
-            CustomerID = customer.CustomerID;
+            CustomerID = customer.CustomerId;
 
             if (items == null || items.Count == 0)
                 throw new ArgumentException("Order must contain at least one item.", nameof(items));

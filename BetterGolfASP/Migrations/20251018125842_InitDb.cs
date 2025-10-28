@@ -67,7 +67,7 @@ namespace BetterGolfASP.Migrations
                         name: "FK_Orders_Customers_CustomerID",
                         column: x => x.CustomerID,
                         principalTable: "Customers",
-                        principalColumn: "CustomerID",
+                        principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -134,7 +134,7 @@ namespace BetterGolfASP.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerID",
                 table: "Orders",
-                column: "CustomerID");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductVariants_ProductID",

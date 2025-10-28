@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection.Metadata;
-using System.Runtime.InteropServices;
-using static BetterGolfASP.Models.Products.IronClub;
-
-namespace BetterGolfASP.Domain.Cart
+﻿namespace BetterGolfASP.Domain.Cart
 {
     public class CartItem
     {
@@ -12,6 +7,7 @@ namespace BetterGolfASP.Domain.Cart
         public decimal Price { get; set; }
         public int Quantity {  get; set; }
         public string? ImageUrl { get; set; }
+        
         public CartItem()
         {
                 
