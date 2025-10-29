@@ -23,15 +23,15 @@ namespace BetterGolfASP.Services
             var customer = await FindByEmailAsync(email) ?? throw new InvalidOperationException($"No customer found with email '{email}'.");
             return customer;
         }
-        public async Task CreateNewCustomerAsync(string firstname, string lastname, string email)
-        {
-            var existingCustomer = await FindByEmailAsync(email);
-            if (existingCustomer != null)
-                throw new InvalidOperationException("Customer already exists");
+        //public async Task CreateNewCustomerAsync(string firstname, string lastname, string email)
+        //{
+        //    var existingCustomer = await FindByEmailAsync(email);
+        //    if (existingCustomer != null)
+        //        throw new InvalidOperationException("Customer already exists");
 
-            var newCustomer = Customer.Create(firstname, lastname, email);
-            _unitOfWork.CustomerRepository.Add(newCustomer);
-            await _unitOfWork.SaveChangesAsync();
-        }
+        //    var newCustomer = Customer.Create(firstname, lastname, email);
+        //    _unitOfWork.CustomerRepository.Add(newCustomer);
+        //    await _unitOfWork.SaveChangesAsync();
+        //}
     }
 }

@@ -17,9 +17,9 @@ namespace DB
            
             var customers = new List<Customer>
             {
-                Customer.Create("Peter", "Hansson", "peterhansson@hotmail.com"),
-                Customer.Create("Josef", "Lagerqvist", "joseflagerqvist@hotmail.com"),
-                Customer.Create("Sara", "Lindblad", "saralindblad@outlook.com")
+                Customer.Create("Peter", "Hansson", "peterhansson@hotmail.com","Sweden","Stockholm","103 16","+4670123456"),
+                Customer.Create("Josef", "Lagerqvist", "joseflagerqvist@hotmail.com","USA","New York","07008","+1 555 555 5555"),
+                Customer.Create("Sara", "Lindblad", "saralindblad@outlook.com", "Sweden", "Stockholm", "103 17", "+4670133456")
             };
 
             context.AddRange(customers);
