@@ -1,0 +1,78 @@
+﻿using BetterGolfASP.Domain.Cart;
+using BetterGolfASP.Infrastructure.DB;
+using Newtonsoft.Json;
+
+namespace BetterGolfASP.Application.Services
+{
+    public class ShoppingCartService(IHttpContextAccessor httpContextAccessor, ILogger<ShoppingCartService> logger, Context context)
+    {
+        private const string CartSessionKey = "ShoppingCart";
+        private readonly UoW _unitOfWork = new UoW(context);
+        private ISession Session => httpContextAccessor.HttpContext.Session;
+
+        public List<CartItem> GetItems()
+        {
+            var data = Session.GetString(CartSessionKey);
+            if (string.IsNullOrEmpty(data))
+            {
+                return new List<CartItem>();
+            }
+            return JsonConvert.DeserializeObject<List<CartItem>>(data);
+        }
+
+        public void SaveItems(List<CartItem> items)
+        {
+            Session.SetString(CartSessionKey,JsonConvert.SerializeObject(items));
+        }
+
+        public void Clear()
+        {
+            var session = httpContextAccessor.HttpContext.Session;
+            session.Remove(CartSessionKey);
+        }
+        public async Task AddItemToCart(int productId,int quantity)
+        {
+            var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
+            if (product == null)
+            {
+                throw new KeyNotFoundException($"Golf club with ID {productId} not found");
+            }
+            var items = GetItems();
+            var existingItem = items.FirstOrDefault(x=>x.ProductID == product.ProductID);
+            if (existingItem != null)
+            {
+                existingItem.Quantity += quantity;
+            }
+            else
+            {
+
+                var newItem = CartItem.Create(
+                    product.ProductID,
+                    product.Name,
+                    product.Price,
+                    quantity,
+                    product.ImgUrls != null && product.ImgUrls.Any() ? product.ImgUrls[0] : null
+                );
+                items.Add(newItem);
+
+            }
+            SaveItems(items);
+        }
+        public void RemoveItem(int productID)
+        {
+            var items = GetItems();
+            var toRemove = items.FirstOrDefault(x => x.ProductID == productID);
+            if (toRemove!=null)
+            {
+                items.Remove(toRemove);
+            }
+            SaveItems(items);
+        }
+        public decimal CalculateTotalPrice()
+        {
+            var items = GetItems(); 
+            return items.Sum(x => x.Price * x.Quantity);
+        }
+
+    }
+}

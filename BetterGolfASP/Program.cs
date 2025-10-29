@@ -1,10 +1,6 @@
-using BetterGolfASP.DB;
-using BetterGolfASP.Services;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using DB;
+using BetterGolfASP.Infrastructure.DB;
+using BetterGolfASP.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
