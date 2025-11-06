@@ -6,7 +6,7 @@ namespace BetterGolfASP.Domain.Models.Products
     public abstract class Product
     {
         [Key]
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
 

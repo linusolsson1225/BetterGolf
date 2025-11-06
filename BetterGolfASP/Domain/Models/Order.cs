@@ -9,10 +9,10 @@
             Sent
         }
 
-        public int OrderID { get; set; }
+        public int OrderId { get; set; }
         public DateTime OrderDate { get; set; }
 
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
         public Customer? Customer { get; set; }
 
         public OrderStatus Status { get; set; }
@@ -24,7 +24,7 @@
         private Order(Customer customer, List<OrderRow> items)
         {
             Customer = customer ?? throw new ArgumentNullException(nameof(customer));
-            CustomerID = customer.CustomerId;
+            CustomerId = customer.CustomerId;
 
             if (items == null || items.Count == 0)
                 throw new ArgumentException("Order must contain at least one item.", nameof(items));

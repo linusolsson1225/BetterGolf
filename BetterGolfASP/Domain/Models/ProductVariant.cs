@@ -7,9 +7,9 @@ namespace BetterGolfASP.Domain.Models
     public class ProductVariant
     {
         [Key]
-        public int VariantID { get; set; }
+        public int VariantId { get; set; }
         
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
         public Product Product { get; set; } = null!;
         public string AttributeName { get; private set; } = null!;
         public string AttributeValue { get; private set; } = null!;

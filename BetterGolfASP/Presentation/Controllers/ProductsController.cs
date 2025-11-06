@@ -42,9 +42,9 @@ namespace BetterGolfASP.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int Id)
+        public async Task<IActionResult> Details(int id)
         {
-            var product = await _productService.GetDetailsAsync(Id);
+            var product = await _productService.GetDetailsAsync(id);
             return View(product);
         }
     }

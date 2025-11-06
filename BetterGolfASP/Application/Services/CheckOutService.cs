@@ -1,5 +1,4 @@
-﻿using BetterGolfASP.Domain.Cart;
-using BetterGolfASP.Domain.Models;
+﻿using BetterGolfASP.Domain.Models;
 using BetterGolfASP.Infrastructure.DB;
 using BetterGolfASP.Presentation.ViewModels;
 
@@ -29,6 +28,8 @@ namespace BetterGolfASP.Application.Services
 
         public async Task PlaceOrderAsync(CheckoutViewModel model)
         {
+            var model1 = model.CartItems;
+            
             var existingCustomer = await FindByEmailAsync(model.Email);
             Customer customer;
 
@@ -54,9 +55,9 @@ namespace BetterGolfASP.Application.Services
             var orderRows = new List<OrderRow>();
             foreach (var cartItem in model.CartItems)
             {
-                var product = await _unitOfWork.ProductRepository.GetByIdAsync(cartItem.ProductID);
+                var product = await _unitOfWork.ProductRepository.GetByIdAsync(cartItem.ProductId);
                 if (product == null)
-                    throw new KeyNotFoundException($"Product with ID {cartItem.ProductID} not found.");
+                    throw new KeyNotFoundException($"Product with ID {cartItem.ProductId} not found.");
 
                 var orderRow = OrderRow.Create(product, cartItem.Quantity);
                 orderRows.Add(orderRow);

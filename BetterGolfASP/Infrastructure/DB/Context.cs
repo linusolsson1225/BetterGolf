@@ -1,6 +1,8 @@
 ﻿using BetterGolfASP.Domain.Models;
 using BetterGolfASP.Domain.Models.Products;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking; 
+
 
 namespace BetterGolfASP.Infrastructure.DB
 {
@@ -19,6 +21,7 @@ namespace BetterGolfASP.Infrastructure.DB
         {
             base.OnModelCreating(modelBuilder);
 
+            // Discriminator för Product-arv
             modelBuilder.Entity<Product>()
                 .HasDiscriminator<string>("ProductType")
                 .HasValue<Product>("Product")
@@ -29,19 +32,36 @@ namespace BetterGolfASP.Infrastructure.DB
                 .HasValue<GolfBall>("GolfBall")
                 .HasValue<Clothing>("Clothing");
 
+            
             modelBuilder.Entity<Product>()
                 .Property(p => p.ImgUrls)
                 .HasConversion(
                     v => string.Join(";", v),
                     v => v.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList()
+                )
+                .Metadata.SetValueComparer(
+                    new ValueComparer<List<string>>(
+                        (c1, c2) => c1 != null && c2 != null && c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                        c => c.ToList()
+                    )
                 );
 
+           
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<OrderRow>()
+                .Property(r => r.Price)
+                .HasPrecision(18, 2);
+
+            
             modelBuilder.Entity<Product>()
                 .HasMany(p => p.Variants)
                 .WithOne(v => v.Product) 
-                .HasForeignKey(v => v.ProductID) 
+                .HasForeignKey(v => v.ProductId) 
                 .OnDelete(DeleteBehavior.Cascade);
-
 
             modelBuilder.Entity<Order>()
                 .HasMany(o => o.OrderRows)
@@ -51,12 +71,12 @@ namespace BetterGolfASP.Infrastructure.DB
             modelBuilder.Entity<OrderRow>()
                 .HasOne(r => r.Product)
                 .WithMany()
-                .HasForeignKey(r => r.ProductID);
+                .HasForeignKey(r => r.ProductId);
 
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.Customer)
                 .WithMany(c => c.Orders)
-                .HasForeignKey(o => o.CustomerID);
+                .HasForeignKey(o => o.CustomerId);
         }
     }
 }

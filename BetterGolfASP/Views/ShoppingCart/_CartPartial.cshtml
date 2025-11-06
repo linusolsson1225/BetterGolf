@@ -16,9 +16,9 @@ else
                     <span>@item.Name</span>
                 </div>
                 <div class="cart-item-right">
-                    <button class="cart-quantity-btn decrease" data-id="@item.ProductID" data-action="decrease">−</button>
+                    <button class="cart-quantity-btn decrease" data-id="@item.ProductId" data-action="decrease">−</button>
                     <span>@item.Quantity</span>
-                    <button class="cart-quantity-btn increase" data-id="@item.ProductID" data-action="increase">+</button>
+                    <button class="cart-quantity-btn increase" data-id="@item.ProductId" data-action="increase">+</button>
                     
 
                     <span>@((item.Price * item.Quantity).ToString("C"))</span>

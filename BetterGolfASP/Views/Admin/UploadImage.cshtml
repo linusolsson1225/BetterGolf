@@ -10,7 +10,7 @@
             <i class="bi bi-arrow-left"></i> Back to Product Selection
         </a>
 
-        <a asp-action="ManageImages" asp-controller="Admin" asp-route-productId="@Model.ProductID" class="btn btn-success ms-2">
+        <a asp-action="ManageImages" asp-controller="Admin" asp-route-productId="@Model.ProductId" class="btn btn-success ms-2">
             Manage Existing Images
         </a>
     </div>
@@ -44,7 +44,7 @@
             <input type="file" name="file" class="form-control" accept="image/*" required />
         </div>
 
-        <input type="hidden" name="id" value="@Model.ProductID" />
+        <input type="hidden" name="id" value="@Model.ProductId" />
 
         <button type="submit" class="btn btn-success w-100">Upload</button>
     </form>

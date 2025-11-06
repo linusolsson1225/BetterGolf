@@ -2,7 +2,7 @@
 {
     public class CartItem
     {
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int Quantity {  get; set; }
@@ -12,9 +12,9 @@
         {
                 
         }
-        private CartItem(int productID, string name, decimal price, int quantity, string? imageUrl)
+        private CartItem(int productId, string name, decimal price, int quantity, string? imageUrl)
         {
-            ProductID = productID;
+            ProductId = productId;
             Name = name;
             Price = price;
             Quantity = quantity;
@@ -22,10 +22,10 @@
             
         }
         
-        public static CartItem Create(int productID, string name, decimal price, int quantity, string? imageUrl=null)
+        public static CartItem Create(int productId, string name, decimal price, int quantity, string? imageUrl=null)
         {
-            if (productID <= 0)
-                throw new ArgumentException("ProductID must be greater than zero.", nameof(productID));
+            if (productId <= 0)
+                throw new ArgumentException("ProductID must be greater than zero.", nameof(productId));
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name is required.", nameof(name));
             if (price <= 0)
@@ -33,7 +33,7 @@
             if (quantity <= 0)
                 throw new ArgumentException("Quantity can not be 0.", nameof(quantity));
 
-            return new CartItem(productID, name, price, quantity, imageUrl);
+            return new CartItem(productId, name, price, quantity, imageUrl);
         }
 
 

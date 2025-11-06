@@ -28,16 +28,16 @@ public class CheckoutController : Controller
         {
             CartItems = cartItems
         };
-        return View(cartItems);
+        return View(model);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> PlaceOrder(CheckoutViewModel model)
     {
+        
         if (!ModelState.IsValid)
         {
-            model.CartItems = GetCartFromSession();
             return View("Index", model);
         }
         await _checkoutService.PlaceOrderAsync(model);

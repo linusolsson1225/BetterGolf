@@ -10,7 +10,7 @@ namespace BetterGolfASP.Domain.Models
     public class OrderRow
     {
         public int OrderRowId { get; set; }
-        public int ProductID { get; set; }
+        public int ProductId { get; set; }
         public Product? Product { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
@@ -21,7 +21,7 @@ namespace BetterGolfASP.Domain.Models
         private OrderRow(Product product, int quantity)
         {
             Product = product ?? throw new ArgumentNullException(nameof(product));
-            ProductID = product.ProductID;
+            ProductId = product.ProductId;
             Quantity = quantity;
             Price = product.Price;
         }

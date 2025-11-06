@@ -38,7 +38,7 @@ namespace BetterGolfASP.Application.Services
                 throw new KeyNotFoundException($"Golf club with ID {productId} not found");
             }
             var items = GetItems();
-            var existingItem = items.FirstOrDefault(x=>x.ProductID == product.ProductID);
+            var existingItem = items.FirstOrDefault(x=>x.ProductId == product.ProductId);
             if (existingItem != null)
             {
                 existingItem.Quantity += quantity;
@@ -47,7 +47,7 @@ namespace BetterGolfASP.Application.Services
             {
 
                 var newItem = CartItem.Create(
-                    product.ProductID,
+                    product.ProductId,
                     product.Name,
                     product.Price,
                     quantity,
@@ -58,10 +58,10 @@ namespace BetterGolfASP.Application.Services
             }
             SaveItems(items);
         }
-        public void RemoveItem(int productID)
+        public void RemoveItem(int productId)
         {
             var items = GetItems();
-            var toRemove = items.FirstOrDefault(x => x.ProductID == productID);
+            var toRemove = items.FirstOrDefault(x => x.ProductId == productId);
             if (toRemove!=null)
             {
                 items.Remove(toRemove);

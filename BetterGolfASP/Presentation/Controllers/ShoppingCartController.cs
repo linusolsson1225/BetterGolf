@@ -44,7 +44,7 @@ namespace BetterGolfASP.Presentation.Controllers
         public IActionResult UpdateQuantity(int productId,string action)
         {
             var items = _shoppingCartService.GetItems();
-            var item = items.FirstOrDefault(i => i.ProductID == productId);
+            var item = items.FirstOrDefault(i => i.ProductId == productId);
             if (item != null)
             {
                 if (action =="increase")

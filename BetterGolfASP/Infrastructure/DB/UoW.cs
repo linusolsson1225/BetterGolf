@@ -7,8 +7,8 @@ namespace BetterGolfASP.Infrastructure.DB
 {
     public class UoW
     {
-        private bool isDisposed = false;
-        private readonly bool disposeContext = false;
+        private bool _isDisposed = false;
+        private readonly bool _disposeContext = false;
         protected Context Context { get; }
        
         public CustomerRepository CustomerRepository { get; private set; }
@@ -32,7 +32,7 @@ namespace BetterGolfASP.Infrastructure.DB
         public UoW()
             : this(new Context())
         {
-            disposeContext = true;
+            _disposeContext = true;
         }
 
         public void Update<T>(T entity) where T : class
@@ -86,18 +86,18 @@ namespace BetterGolfASP.Infrastructure.DB
 
         protected virtual void Dispose(bool disposing)
         {
-            if (isDisposed)
+            if (_isDisposed)
             {
                 return;
             }
             if (disposing)
             {
-                if (disposeContext)
+                if (_disposeContext)
                 {
                     Context.Dispose();
                 }
             }
-            isDisposed = true;
+            _isDisposed = true;
         }
 
         ~UoW()

@@ -11,7 +11,7 @@ namespace BetterGolfASP.Infrastructure.DB
 {
     public class Seed
     {
-        public void SeedDB(Context context)
+        public void SeedDb(Context context)
         {
            
             var customers = new List<Customer>

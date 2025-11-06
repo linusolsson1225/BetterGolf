@@ -1,11 +1,7 @@
 ﻿using BetterGolfASP.Domain.Models;
 using BetterGolfASP.Infrastructure.DB;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BetterGolfASP.Infrastructure.Repositories
 {
@@ -21,7 +17,7 @@ namespace BetterGolfASP.Infrastructure.Repositories
         public async Task<Order> GetByIdAsync(int orderId)
         {
             var order = await _context.Orders
-                .FirstOrDefaultAsync(o => o.OrderID == orderId);
+                .FirstOrDefaultAsync(o => o.OrderId == orderId);
 
             if (order == null)
                 throw new KeyNotFoundException($"Order with ID {orderId} not found.");

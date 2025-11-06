@@ -24,7 +24,7 @@ namespace BetterGolfASP.Infrastructure.Repositories
         {
             return await _context.Products
                 .Include(p => p.Variants)
-                .FirstOrDefaultAsync(p => p.ProductID == productId);
+                .FirstOrDefaultAsync(p => p.ProductId == productId);
         }
 
         public async Task<List<T>> GetByTypeAsync<T>() where T : Product
