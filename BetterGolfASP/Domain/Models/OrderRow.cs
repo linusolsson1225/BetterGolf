@@ -1,39 +1,44 @@
 ﻿using BetterGolfASP.Domain.Models.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BetterGolfASP.Domain.Models
 {
     public class OrderRow
     {
-        public int OrderRowId { get; set; }
-        public int ProductId { get; set; }
-        public Product? Product { get; set; }
-        public int Quantity { get; set; }
-        public decimal Price { get; set; }
+        public int OrderRowId { get; private set; }
+        public int ProductId { get; private set; }
+        public int? VariantId { get; private set; }
+        public int Quantity { get; private set; }
+        public decimal Price { get; private set; }
+        
+        public ProductVariant? Variant { get; private set; }
+        public Product Product { get; private set; }
         public decimal Total => Price * Quantity;
 
         protected OrderRow() { } 
 
-        private OrderRow(Product product, int quantity)
+        private OrderRow(Product product, int quantity, ProductVariant? variant = null)
         {
             Product = product ?? throw new ArgumentNullException(nameof(product));
             ProductId = product.ProductId;
-            Quantity = quantity;
-            Price = product.Price;
-        }
 
-        public static OrderRow Create(Product product, int quantity)
-        {
-            if (product == null)
-                throw new ArgumentNullException(nameof(product), "Product cannot be null.");
+            Variant = variant;
+            VariantId = variant?.VariantId;
+
             if (quantity <= 0)
                 throw new ArgumentException("Quantity must be greater than zero.", nameof(quantity));
 
-            return new OrderRow(product, quantity);
+            Quantity = quantity;
+            Price =  product.Price;
+        }
+
+        
+        public static OrderRow Create(Product product, int quantity, ProductVariant? variant = null)
+        {
+            if (product == null)
+                throw new ArgumentNullException(nameof(product), "Product cannot be null.");
+
+            return new OrderRow(product, quantity, variant);
         }
     }
 }

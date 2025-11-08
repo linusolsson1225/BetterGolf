@@ -14,7 +14,7 @@ namespace BetterGolfASP.Domain.Models
         public string AttributeName { get; private set; } = null!;
         public string AttributeValue { get; private set; } = null!;
         public int Stock { get; private set; }
-        //public List<string> ImgUrls { get; private set; } = new();
+        
 
         protected ProductVariant() { } 
 
@@ -43,5 +43,16 @@ namespace BetterGolfASP.Domain.Models
 
             return new ProductVariant(attributeName, attributeValue, stock);
         }
+        public void ReduceVariantStock(int quantity)
+        {
+            if (quantity <= 0)
+                throw new ArgumentException("Quantity must be greater than zero.", nameof(quantity));
+
+            if (Stock < quantity)
+                throw new InvalidOperationException("Not enough stock available.");
+
+            Stock -= quantity;
+        }
+
     }
 }

@@ -40,7 +40,8 @@ public class CheckoutController : Controller
         {
             return View("Index", model);
         }
-        await _checkoutService.PlaceOrderAsync(model);
+        var order = await _checkoutService.PlaceOrderAsync(model);
+        await _checkoutService.ReduceStockForOrderAsync(order);
         _shoppingCartService.Clear();
         return RedirectToAction("OrderConfirmation");
     }

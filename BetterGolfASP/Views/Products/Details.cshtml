@@ -1,4 +1,5 @@
-﻿@using BetterGolfASP.Domain.Models.Products
+﻿
+@using BetterGolfASP.Domain.Models.Products
 @model Product
 
 @{
@@ -8,13 +9,13 @@
 <div class="container py-5">
     <div class="row g-5 align-items-center">
 
-        <!-- Produktbilder -->
+        <!-- ProductImage -->
         <div class="col-md-6 text-center">
             <div class="product-image-wrapper border rounded-4 shadow-sm p-3 bg-white">
 
                 @if (Model.ImgUrls != null && Model.ImgUrls.Count > 0)
                 {
-                    <!-- Huvudbild -->
+                    <!-- Header -->
                     <div class="mb-3">
                         <img id="mainProductImage"
                              src="@Model.ImgUrls[0]"
@@ -43,7 +44,7 @@
             </div>
         </div>
 
-        <!-- Produktinformation -->
+        <!-- Product information -->
         <div class="col-md-6">
             <h1 class="fw-bold mb-3">@Model.Name</h1>
             <p class="text-muted">@Model.Description</p>
@@ -52,7 +53,7 @@
                 <span class="h3 text-success fw-semibold me-3">
                     @Model.Price.ToString("C")
                 </span>
-                @if ((Model.Stock ?? 0) > 0)
+                @if ((Model.GetTotalStock()) > 0)
                 {
                     <span class="badge bg-success">In Stock</span>
                 }

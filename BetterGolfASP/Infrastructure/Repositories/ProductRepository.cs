@@ -34,7 +34,7 @@ namespace BetterGolfASP.Infrastructure.Repositories
                 .Include(p => p.Variants)
                 .ToListAsync();
         }
-
+        
         public async Task AddAsync(Product product)
         {
             _context.Products.Add(product);

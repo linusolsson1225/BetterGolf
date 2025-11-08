@@ -68,7 +68,7 @@ if (app.Environment.IsDevelopment())
 //{
     //var context = scope.ServiceProvider.GetRequiredService<Context>();
     //Seed seed = new Seed();
-    //seed.SeedDB(context);
+  //  seed.SeedDb(context);
 //}
 app.Run();
 

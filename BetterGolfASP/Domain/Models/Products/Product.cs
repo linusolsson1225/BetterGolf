@@ -1,20 +1,19 @@
-﻿using BetterGolfASP.Domain.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BetterGolfASP.Domain.Models.Products
 {
     public abstract class Product
     {
         [Key]
-        public int ProductId { get; set; }
-        public string Name { get; set; } = null!;
-        public string Description { get; set; } = null!;
+        public int ProductId { get; private set; }
+        public string Name { get; private set; } = null!;
+        public string Description { get; private set; } = null!;
 
-        public decimal Price { get; set; }
+        public decimal Price { get; private set; }
 
-        public int? Stock { get; set; }
+        public int? Stock { get; private set; }
 
-        public List<string> ImgUrls { get; set; } = new();
+        public List<string> ImgUrls { get; init; } = new();
 
         public List<ProductVariant> Variants { get; private set; } = new();
 
@@ -48,12 +47,25 @@ namespace BetterGolfASP.Domain.Models.Products
 
         public int GetTotalStock()
         {
-            if (!HasVariants)
+            if (HasVariants)
             {
-                return Variants.Sum(v=>v.Stock);
+                return Variants.Sum(v => v.Stock);
             }
+
             return Stock ?? 0;
         }
+        public void ReduceStock(int quantity)
+        {
+            if (quantity <= 0)
+                throw new ArgumentException("Quantity must be greater than zero.", nameof(quantity));
+
+            if (Stock < quantity)
+                throw new InvalidOperationException("Not enough stock available.");
+
+            Stock -= quantity;
+        }
+
+        
 
     }
 }
