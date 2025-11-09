@@ -11,6 +11,14 @@ namespace BetterGolfASP.Presentation.Controllers
         {
             _shoppingCartService = shoppingCartService;
         }
+        
+        [HttpGet]
+        public IActionResult GetCartHtml()
+        {
+            // Return the current cart items as a partial view
+            return PartialView("_CartPartial", _shoppingCartService.GetItems());
+        }
+
 
         [HttpGet]
         public IActionResult Index()

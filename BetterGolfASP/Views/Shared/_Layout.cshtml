@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using BetterGolfASP.Application.Services
+@inject ShoppingCartService CartService
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -29,11 +32,13 @@
                     </ul>
                 </div>
 
-                <!-- Cart button -->
+                <!-- Cart button with server-side count -->
                 <button class="btn btn-outline-secondary position-relative" type="button"
                         data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
                     <i class="bi bi-cart3 fs-5"></i>
-                    <span id="cart-count" class="badge bg-success text-white rounded-pill position-absolute top-0 start-100 translate-middle" style="font-size:0.65rem;">0</span>
+                    <span id="cart-count" class="badge bg-success text-white rounded-pill position-absolute top-0 start-100 translate-middle" style="font-size:0.65rem;">
+                        @CartService.GetCartCount()
+                    </span>
                 </button>
             </div>
         </nav>

@@ -60,7 +60,7 @@ namespace BetterGolfASP.Application.Services
             {
                 var product = await _unitOfWork.ProductRepository.GetByIdAsync(cartItem.ProductId)
                               ?? throw new KeyNotFoundException($"Product with ID {cartItem.ProductId} not found.");
-
+            //FIXA VARIANT
                 var orderRow = OrderRow.Create(product, cartItem.Quantity);
                 orderRows.Add(orderRow);
             }
