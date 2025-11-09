@@ -1,5 +1,4 @@
-﻿
-@using BetterGolfASP.Domain.Models.Products
+﻿@using BetterGolfASP.Domain.Models.Products
 @model Product
 
 @{
@@ -12,10 +11,8 @@
         <!-- ProductImage -->
         <div class="col-md-6 text-center">
             <div class="product-image-wrapper border rounded-4 shadow-sm p-3 bg-white">
-
                 @if (Model.ImgUrls != null && Model.ImgUrls.Count > 0)
                 {
-                    <!-- Header -->
                     <div class="mb-3">
                         <img id="mainProductImage"
                              src="@Model.ImgUrls[0]"
@@ -24,7 +21,6 @@
                              style="max-height: 400px; object-fit: contain;" />
                     </div>
 
-                    <!-- Thumbnails -->
                     <div class="d-flex flex-wrap justify-content-center gap-2">
                         @for (int i = 0; i < Model.ImgUrls.Count; i++)
                         {
@@ -40,7 +36,6 @@
                 {
                     <p class="text-muted">No images uploaded yet.</p>
                 }
-
             </div>
         </div>
 
@@ -49,28 +44,45 @@
             <h1 class="fw-bold mb-3">@Model.Name</h1>
             <p class="text-muted">@Model.Description</p>
 
+            <!-- Price + Stock badge -->
             <div class="d-flex align-items-center mb-3">
                 <span class="h3 text-success fw-semibold me-3">
                     @Model.Price.ToString("C")
                 </span>
-                @if ((Model.GetTotalStock()) > 0)
-                {
-                    <span class="badge bg-success">In Stock</span>
-                }
-                else
-                {
-                    <span class="badge bg-danger">Out of Stock</span>
-                }
+                <span id="stockBadge"
+                      data-total-stock="@Model.GetTotalStock()"
+                      class="badge @(Model.GetTotalStock() > 0 ? "bg-success" : "bg-danger")">
+                    @(Model.GetTotalStock() > 0 ? "In Stock" : "Out of Stock")
+                </span>
             </div>
 
             <hr>
+
+            <!-- Variant dropdown (endast om det finns varianter) -->
+            @if (Model.HasVariants)
+            {
+                <div class="mb-3">
+                    <label for="variantSelect" class="form-label fw-semibold">Choose a variant:</label>
+                    <select id="variantSelect" class="form-select">
+                        <option value="">-- Select variant --</option>
+                        @foreach (var variant in Model.Variants)
+                        {
+                            <option value="@variant.VariantId"
+                                    data-stock="@variant.Stock">
+                                @variant.AttributeName: @variant.AttributeValue
+                            </option>
+                        }
+                    </select>
+                </div>
+            }
 
             <div class="d-flex gap-3">
                 <button class="btn btn-success add-to-cart"
                         data-id="@Model.ProductId"
                         data-name="@Model.Name"
                         data-price="@Model.Price"
-                        data-quantity="1">
+                        data-quantity="1"
+                        @(Model.HasVariants ? "disabled" : "")>
                     Add to Cart
                 </button>
 

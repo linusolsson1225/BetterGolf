@@ -6,7 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-//DBContext
 var connection = builder.Environment.IsDevelopment()
     ? builder.Configuration.GetConnectionString("DefaultConnection")
     : Environment.GetEnvironmentVariable("DefaultConnection");
@@ -14,9 +13,7 @@ var connection = builder.Environment.IsDevelopment()
 builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(connection));
 
-
 builder.Services.AddDistributedMemoryCache();
-
 
 builder.Services.AddSession(options =>
 {
@@ -25,7 +22,6 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-//Services
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ShoppingCartService>();
 builder.Services.AddScoped<ProductService>();
@@ -34,7 +30,6 @@ builder.Services.AddScoped<CheckOutService>();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
-
 
 if (!app.Environment.IsDevelopment())
 {
@@ -47,10 +42,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-
 app.UseSession();
 app.UseAuthorization();
-
 
 app.MapControllerRoute(
     name: "default",
@@ -64,12 +57,12 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/openapi/v1.json", "v1");
     });
 }
+
 //using (var scope = app.Services.CreateScope())
 //{
-    //var context = scope.ServiceProvider.GetRequiredService<Context>();
-    //Seed seed = new Seed();
-  //  seed.SeedDb(context);
+//    var context = scope.ServiceProvider.GetRequiredService<Context>();
+//    Seed seed = new Seed();
+//    seed.SeedDb(context);
 //}
+
 app.Run();
-
-

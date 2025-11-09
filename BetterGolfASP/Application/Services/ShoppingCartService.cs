@@ -1,78 +1,103 @@
 ﻿using BetterGolfASP.Domain.Cart;
 using BetterGolfASP.Infrastructure.DB;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
 namespace BetterGolfASP.Application.Services
 {
-    public class ShoppingCartService(IHttpContextAccessor httpContextAccessor, ILogger<ShoppingCartService> logger, Context context)
+    public class ShoppingCartService
     {
         private const string CartSessionKey = "ShoppingCart";
-        private readonly UoW _unitOfWork = new UoW(context);
-        private ISession Session => httpContextAccessor.HttpContext.Session;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UoW _unitOfWork;
+
+        private ISession Session => _httpContextAccessor.HttpContext.Session;
+
+        public ShoppingCartService(IHttpContextAccessor httpContextAccessor, Context context)
+        {
+            _httpContextAccessor = httpContextAccessor;
+            _unitOfWork = new UoW(context);
+        }
 
         public List<CartItem> GetItems()
         {
             var data = Session.GetString(CartSessionKey);
             if (string.IsNullOrEmpty(data))
-            {
                 return new List<CartItem>();
-            }
+
             return JsonConvert.DeserializeObject<List<CartItem>>(data);
         }
 
         public void SaveItems(List<CartItem> items)
         {
-            Session.SetString(CartSessionKey,JsonConvert.SerializeObject(items));
+            Session.SetString(CartSessionKey, JsonConvert.SerializeObject(items));
         }
 
-        public void Clear()
-        {
-            var session = httpContextAccessor.HttpContext.Session;
-            session.Remove(CartSessionKey);
-        }
-        public async Task AddItemToCart(int productId,int quantity)
+        public async Task AddItemToCart(int productId, int quantity, int? variantId = null)
         {
             var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
             if (product == null)
-            {
-                throw new KeyNotFoundException($"Golf club with ID {productId} not found");
-            }
+                throw new KeyNotFoundException($"Product with ID {productId} not found");
+
             var items = GetItems();
-            var existingItem = items.FirstOrDefault(x=>x.ProductId == product.ProductId);
-            if (existingItem != null)
+
+            if (product.HasVariants)
             {
-                existingItem.Quantity += quantity;
+                if (variantId == null)
+                    throw new ArgumentException("Variant ID must be provided for products with variants.");
+
+                var variant = product.Variants.FirstOrDefault(v => v.VariantId == variantId);
+                if (variant == null)
+                    throw new KeyNotFoundException($"Variant with ID {variantId} not found.");
+
+                var existingItem = items.FirstOrDefault(x => x.ProductId == productId && x.VariantId == variantId);
+                if (existingItem != null)
+                    existingItem.Quantity += quantity;
+                else
+                    items.Add(CartItem.Create(product.ProductId, product.Name, product.Price, quantity, product.ImgUrls.FirstOrDefault(), variant.VariantId));
             }
             else
             {
-
-                var newItem = CartItem.Create(
-                    product.ProductId,
-                    product.Name,
-                    product.Price,
-                    quantity,
-                    product.ImgUrls != null && product.ImgUrls.Any() ? product.ImgUrls[0] : null
-                );
-                items.Add(newItem);
-
+                var existingItem = items.FirstOrDefault(x => x.ProductId == productId && x.VariantId == null);
+                if (existingItem != null)
+                    existingItem.Quantity += quantity;
+                else
+                    items.Add(CartItem.Create(product.ProductId, product.Name, product.Price, quantity, product.ImgUrls.FirstOrDefault()));
             }
+
             SaveItems(items);
         }
-        public void RemoveItem(int productId)
+
+        public void RemoveItem(int productId, int? variantId = null)
         {
             var items = GetItems();
-            var toRemove = items.FirstOrDefault(x => x.ProductId == productId);
-            if (toRemove!=null)
-            {
-                items.Remove(toRemove);
-            }
+            var item = items.FirstOrDefault(x => x.ProductId == productId && x.VariantId == variantId);
+            if (item != null)
+                items.Remove(item);
+
             SaveItems(items);
         }
-        public decimal CalculateTotalPrice()
+
+        public void UpdateQuantity(int productId, int? variantId, string action)
         {
-            var items = GetItems(); 
-            return items.Sum(x => x.Price * x.Quantity);
+            var items = GetItems();
+            var item = items.FirstOrDefault(x => x.ProductId == productId && x.VariantId == variantId);
+            if (item == null) return;
+
+            if (action == "increase") item.Quantity++;
+            else if (action == "decrease")
+            {
+                item.Quantity--;
+                if (item.Quantity <= 0) items.Remove(item);
+            }
+
+            SaveItems(items);
         }
 
+        public int GetCartCount() => GetItems().Sum(x => x.Quantity);
+
+        public decimal CalculateTotalPrice() => GetItems().Sum(x => x.Price * x.Quantity);
+
+        public void Clear() => Session.Remove(CartSessionKey);
     }
 }

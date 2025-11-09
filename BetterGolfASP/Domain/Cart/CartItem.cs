@@ -2,19 +2,23 @@
 {
     public class CartItem
     {
-        public int ProductId { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
+        public int ProductId { get;  set; }
+        public int? VariantId { get; set; }
+        public string Name { get;  set; }
+        public decimal Price { get;  set; }
         public int Quantity {  get; set; }
-        public string? ImageUrl { get; set; }
+        public string? ImageUrl { get;  set; }
         
         public CartItem()
         {
                 
         }
-        private CartItem(int productId, string name, decimal price, int quantity, string? imageUrl)
+
+        private CartItem(int productId, string name, decimal price, int quantity, string? imageUrl,
+            int? variantId = null)
         {
             ProductId = productId;
+            VariantId = variantId;
             Name = name;
             Price = price;
             Quantity = quantity;
@@ -22,7 +26,7 @@
             
         }
         
-        public static CartItem Create(int productId, string name, decimal price, int quantity, string? imageUrl=null)
+        public static CartItem Create(int productId, string name, decimal price, int quantity, string? imageUrl = null, int? variantId = null)
         {
             if (productId <= 0)
                 throw new ArgumentException("ProductID must be greater than zero.", nameof(productId));
@@ -31,11 +35,9 @@
             if (price <= 0)
                 throw new ArgumentException("Price must be greater than zero.", nameof(price));
             if (quantity <= 0)
-                throw new ArgumentException("Quantity can not be 0.", nameof(quantity));
-
-            return new CartItem(productId, name, price, quantity, imageUrl);
+                throw new ArgumentException("Quantity cannot be 0.", nameof(quantity));
+            
+            return new CartItem(productId, name, price, quantity, imageUrl, variantId);
         }
-
-
     }
 }

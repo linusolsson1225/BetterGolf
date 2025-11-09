@@ -1,5 +1,4 @@
 ﻿using BetterGolfASP.Application.Services;
-using BetterGolfASP.Infrastructure.DB;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BetterGolfASP.Presentation.Controllers
@@ -7,74 +6,41 @@ namespace BetterGolfASP.Presentation.Controllers
     public class ShoppingCartController : Controller
     {
         private readonly ShoppingCartService _shoppingCartService;
-        private readonly ILogger<ShoppingCartController> _logger;
 
-        public ShoppingCartController(ShoppingCartService shoppingCartService,ILogger<ShoppingCartController> logger,Context context)
+        public ShoppingCartController(ShoppingCartService shoppingCartService)
         {
-                _shoppingCartService = shoppingCartService;
-            _logger = logger;
-                
+            _shoppingCartService = shoppingCartService;
         }
-        
+
+        [HttpGet]
         public IActionResult Index()
         {
-            var items = _shoppingCartService.GetItems();
-            var total = _shoppingCartService.CalculateTotalPrice();
-            ViewBag.TotalPrice = total;
-            return View(items);
+            ViewBag.TotalPrice = _shoppingCartService.CalculateTotalPrice();
+            return View(_shoppingCartService.GetItems());
         }
-        
 
         [HttpPost]
-        public async Task <IActionResult> AddToCart(int productId, int quantity)
+        public async Task<IActionResult> AddToCart(int productId, int quantity, int? variantId)
         {
+            await _shoppingCartService.AddItemToCart(productId, quantity, variantId);
+            return PartialView("_CartPartial", _shoppingCartService.GetItems());
+        }
 
-            await _shoppingCartService.AddItemToCart(productId, quantity);
-            var cartCount = _shoppingCartService.GetItems().Sum(x => x.Quantity);
-            return Json(new { count = cartCount });
-        }
-        
         [HttpPost]
-        public IActionResult RemoveItem(int productId)
+        public IActionResult RemoveItem(int productId, int? variantId)
         {
-            _shoppingCartService.RemoveItem(productId);
-            return RedirectToAction("Index");
+            _shoppingCartService.RemoveItem(productId, variantId);
+            return PartialView("_CartPartial", _shoppingCartService.GetItems());
         }
+
         [HttpPost]
-        public IActionResult UpdateQuantity(int productId,string action)
+        public IActionResult UpdateQuantity(int productId, int? variantId, string action)
         {
-            var items = _shoppingCartService.GetItems();
-            var item = items.FirstOrDefault(i => i.ProductId == productId);
-            if (item != null)
-            {
-                if (action =="increase")
-                {
-                    item.Quantity++;
-                }
-                else if (action == "decrease")
-                {
-                    item.Quantity--;
-                    if (item.Quantity == 0)
-                    {
-                        items.Remove(item);
-                    }
-                }
-                    
-            }
-            _shoppingCartService.SaveItems(items);
-            return PartialView("_CartPartial", items);
+            _shoppingCartService.UpdateQuantity(productId, variantId, action);
+            return PartialView("_CartPartial", _shoppingCartService.GetItems());
         }
+
         [HttpGet]
-        public IActionResult GetCartCount()
-        {
-            var count = _shoppingCartService.GetItems().Count();
-            return Json(count);
-        }
-        [HttpGet]
-        public IActionResult GetCartHtml()
-        {
-            var items = _shoppingCartService.GetItems();
-            return PartialView("_CartPartial",items);
-        }
+        public IActionResult GetCartCount() => Json(_shoppingCartService.GetCartCount());
     }
 }
