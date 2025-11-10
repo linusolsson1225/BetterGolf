@@ -54,11 +54,20 @@
                                             </tr>
 
                                             
-                                            <input type="hidden" name="CartItems[@i].ProductId" value="@item.ProductId"/>
+                                            <input type="hidden" name="CartItems[@i].ProductId" value="@item.ProductId" />
                                             <input type="hidden" name="CartItems[@i].Name" value="@item.Name" />
                                             <input type="hidden" name="CartItems[@i].Price" value="@item.Price" />
                                             <input type="hidden" name="CartItems[@i].Quantity" value="@item.Quantity" />
                                             <input type="hidden" name="CartItems[@i].ImageUrl" value="@item.ImageUrl" />
+
+                                            @if (item.VariantId.HasValue)
+                                            {
+                                                <input type="hidden" name="CartItems[@i].VariantId" value="@item.VariantId" />
+                                            }
+                                            //@if (!string.IsNullOrEmpty(item.VariantName))
+                                            //{
+                                            //    <input type="hidden" name="CartItems[@i].VariantName" value="@item.VariantName" />
+                                            //}
                                         }
                                     </tbody>
                                 </table>
