@@ -1,5 +1,5 @@
 ﻿@model BetterGolfASP.Presentation.ViewModels.CheckoutViewModel
-
+@using System.Globalization
 @{
     ViewBag.Title = "Checkout - BetterGolf";
     decimal totalAmount = Model.CartItems?.Sum(i => i.Price * i.Quantity) ?? 0;
@@ -47,10 +47,19 @@
                                                          class="img-fluid rounded shadow-sm"
                                                          style="width: 80px; height: 80px; object-fit: cover;" />
                                                 </td>
-                                                <td class="fw-semibold">@item.Name</td>
-                                                <td>@item.Price.ToString("C")</td>
+                                                <td class="fw-semibold">
+                                                    @item.Name
+                                                    @if (!string.IsNullOrEmpty(item.VariantName))
+                                                    {
+                                                        <div class="text-muted small">
+                                                            @item.VariantName: @item.VariantAttributeValue
+                                                        </div>
+                                                    }
+                                                </td>
+                                                <td>@item.Price.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))</td>
                                                 <td>@item.Quantity</td>
-                                                <td>@(item.Price * item.Quantity).ToString("C")</td>
+                                                <td>@((item.Price * item.Quantity).ToString("C", CultureInfo.CreateSpecificCulture("en-US")))</td>
+                                                
                                             </tr>
 
                                             
@@ -62,18 +71,15 @@
 
                                             @if (item.VariantId.HasValue)
                                             {
-                                                <input type="hidden" name="CartItems[@i].VariantId" value="@item.VariantId" />
+                                                <input type="hidden" name="CartItems[@i].VariantId"
+                                                       value="@item.VariantId"/>
                                             }
-                                            //@if (!string.IsNullOrEmpty(item.VariantName))
-                                            //{
-                                            //    <input type="hidden" name="CartItems[@i].VariantName" value="@item.VariantName" />
-                                            //}
                                         }
                                     </tbody>
                                 </table>
 
                                 <div class="d-flex justify-content-end mt-3">
-                                    <h4 class="fw-bold">Total: <span class="text-success">@totalAmount.ToString("C")</span></h4>
+                                    <h4 class="fw-bold">Total: <span class="text-success">@totalAmount.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))</span></h4>
                                 </div>
                             }
                         </div>

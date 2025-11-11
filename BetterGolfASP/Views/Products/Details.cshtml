@@ -1,4 +1,5 @@
-﻿@using BetterGolfASP.Domain.Models.Products
+﻿@using System.Globalization
+@using BetterGolfASP.Domain.Models.Products
 @model Product
 
 @{
@@ -47,7 +48,7 @@
             <!-- Price + Stock badge -->
             <div class="d-flex align-items-center mb-3">
                 <span class="h3 text-success fw-semibold me-3">
-                    @Model.Price.ToString("C")
+                    @Model.Price.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))
                 </span>
                 <span id="stockBadge"
                       data-total-stock="@Model.GetTotalStock()"
@@ -58,7 +59,7 @@
 
             <hr>
 
-            <!-- Variant dropdown (endast om det finns varianter) -->
+            <!-- Variant dropdown -->
             @if (Model.HasVariants)
             {
                 <div class="mb-3">

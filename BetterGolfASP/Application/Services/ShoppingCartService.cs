@@ -1,23 +1,15 @@
 ﻿using BetterGolfASP.Domain.Cart;
 using BetterGolfASP.Infrastructure.DB;
-using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
 namespace BetterGolfASP.Application.Services
 {
-    public class ShoppingCartService
+    public class ShoppingCartService(IHttpContextAccessor httpContextAccessor, Context context)
     {
         private const string CartSessionKey = "ShoppingCart";
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UoW _unitOfWork;
+        private readonly UoW _unitOfWork = new(context);
 
-        private ISession Session => _httpContextAccessor.HttpContext.Session;
-
-        public ShoppingCartService(IHttpContextAccessor httpContextAccessor, Context context)
-        {
-            _httpContextAccessor = httpContextAccessor;
-            _unitOfWork = new UoW(context);
-        }
+        private ISession Session => httpContextAccessor.HttpContext.Session;
 
         public List<CartItem> GetItems()
         {
@@ -54,7 +46,8 @@ namespace BetterGolfASP.Application.Services
                 if (existingItem != null)
                     existingItem.Quantity += quantity;
                 else
-                    items.Add(CartItem.Create(product.ProductId, product.Name, product.Price, quantity, product.ImgUrls.FirstOrDefault(), variant.VariantId));
+                    items.Add(CartItem.Create(product.ProductId, product.Name, product.Price, quantity,
+                        product.ImgUrls.FirstOrDefault(), variant.VariantId, variant.AttributeName,variant.AttributeValue));
             }
             else
             {
@@ -62,7 +55,8 @@ namespace BetterGolfASP.Application.Services
                 if (existingItem != null)
                     existingItem.Quantity += quantity;
                 else
-                    items.Add(CartItem.Create(product.ProductId, product.Name, product.Price, quantity, product.ImgUrls.FirstOrDefault()));
+                    items.Add(CartItem.Create(product.ProductId, product.Name, product.Price, quantity,
+                        product.ImgUrls.FirstOrDefault()));
             }
 
             SaveItems(items);
