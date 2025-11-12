@@ -33,17 +33,16 @@ public class CheckoutController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [HttpPost]
     public async Task<IActionResult> PlaceOrder(CheckoutViewModel model)
     {
-        
         if (!ModelState.IsValid)
-        {
             return View("Index", model);
-        }
-        var order = await _checkoutService.PlaceOrderAsync(model);
-        await _checkoutService.ReduceStockForOrderAsync(order);
+
+        var confirmationVm = await _checkoutService.ProcessOrderAsync(model);
         _shoppingCartService.Clear();
-        return RedirectToAction("OrderConfirmation");
+
+        return View("OrderConfirmation", confirmationVm);
     }
 
     private List<CartItem> GetCartFromSession()

@@ -1,5 +1,72 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model BetterGolfASP.Presentation.ViewModels.OrderConfirmationViewModel
+@using System.Globalization
+
 @{
+    ViewBag.Title = "Order Confirmation - BetterGolf";
 }
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="border rounded-4 shadow-sm p-5 bg-white text-center">
+                <h1 class="text-success fw-bold mb-3">
+                    <i class="bi bi-check2-circle me-2"></i>Thank you for your order!
+                </h1>
+                <p class="mb-2">Your order has been successfully placed.</p>
+                <p class="fw-semibold">Order Number: <span class="text-primary">@Model.OrderNumber</span></p>
+
+                <hr class="my-4">
+
+                <h3 class="fw-bold mb-3">Order Summary</h3>
+
+                <table class="table table-bordered align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderItems)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Name
+                                    @if (!string.IsNullOrEmpty(item.VariantName))
+                                    {
+                                        <div class="text-muted small">
+                                            @item.VariantName: @item.VariantAttributeValue
+                                        </div>
+                                    }
+                                </td>
+                                <td>@item.Price.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))</td>
+                                <td>@item.Quantity</td>
+                                <td>@((item.Price * item.Quantity).ToString("C", CultureInfo.CreateSpecificCulture("en-US")))</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div class="d-flex justify-content-end mt-3">
+                    <h4 class="fw-bold">Total: <span class="text-success">@Model.TotalAmount.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))</span></h4>
+                </div>
+
+                <hr class="my-4">
+
+                <h5 class="fw-semibold mb-3">Billing Details</h5>
+                <p>@Model.FirstName @Model.LastName</p>
+                <p>@Model.Email</p>
+                <p>@Model.PhoneNumber</p>
+                <p>@Model.City, @Model.Country - @Model.ZipCode</p>
+
+                <a href="@Url.Action("Index", "Home")" class="btn btn-primary mt-4">
+                    Continue Shopping
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

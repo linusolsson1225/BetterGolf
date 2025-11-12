@@ -1,21 +1,15 @@
 ﻿using BetterGolfASP.Domain.Cart;
 using BetterGolfASP.Domain.Models;
+using BetterGolfASP.Domain.Models.Products;
 using BetterGolfASP.Infrastructure.DB;
 using BetterGolfASP.Presentation.ViewModels;
 
 
 namespace BetterGolfASP.Application.Services
 {
-    public class CheckOutService
+    public class CheckOutService(ILogger<CheckOutService> logger, Context context)
     {
-        private readonly ILogger<CheckOutService> _logger;
-        private readonly UoW _unitOfWork;
-
-        public CheckOutService(ILogger<CheckOutService> logger, Context context)
-        {
-            _logger = logger;
-            _unitOfWork = new UoW(context);
-        }
+        private readonly UoW _unitOfWork = new(context);
 
         public async Task<IEnumerable<Customer>> GetAllAsync()
         {
@@ -26,13 +20,7 @@ namespace BetterGolfASP.Application.Services
         {
             return await _unitOfWork.CustomerRepository.GetByEmailAsync(email);
         }
-
-        public async Task<Customer> GetRequiredByEmailAsync(string email)
-        {
-            return await FindByEmailAsync(email)
-                   ?? throw new InvalidOperationException($"No customer found with email '{email}'.");
-        }
-
+        
         private async Task<Customer> AddNewCustomerAsync(CheckoutViewModel model)
         {
             var customer = Customer.Create(
@@ -47,7 +35,7 @@ namespace BetterGolfASP.Application.Services
 
             _unitOfWork.CustomerRepository.Add(customer);
             await _unitOfWork.SaveChangesAsync();
-            _logger.LogInformation("New customer added: {Email}", model.Email);
+            logger.LogInformation("New customer added: {Email}", model.Email);
 
             return customer;
         }
@@ -66,17 +54,36 @@ namespace BetterGolfASP.Application.Services
 
             return orderRows;
         }
+
+        public Task<OrderConfirmationViewModel> CreateOrderConfirmationViewModel(int orderId,
+            CheckoutViewModel model)
+        {
+            var orderConfirmationViewModel = new OrderConfirmationViewModel()
+            {
+                OrderNumber = orderId.ToString(),
+                TotalAmount = model.CartItems.Sum(i => i.Price * i.Quantity),
+                OrderItems = model.CartItems,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                Country = model.Country,
+                City = model.City,
+                ZipCode = model.ZipCode,
+            };
+            return Task.FromResult(orderConfirmationViewModel);
+        }
         public async Task ReduceStockForOrderAsync(Order order)
         {
-            _logger.LogInformation("Reducing stock for order {OrderId}", order.OrderId);
+            logger.LogInformation("Reducing stock for order {OrderId}", order.OrderId);
 
             foreach (var row in order.OrderRows)
             {
                 await ReduceStockAsync(row.ProductId, row.Quantity, row.VariantId);
             }
 
-            _logger.LogInformation("Stock reduced for order {OrderId}", order.OrderId);
+            logger.LogInformation("Stock reduced for order {OrderId}", order.OrderId);
         }
+        
         private async Task ReduceStockAsync(int productId,int quantity, int? variantId=null)
         {
             var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId)
@@ -107,12 +114,22 @@ namespace BetterGolfASP.Application.Services
             }
 
             await _unitOfWork.SaveChangesAsync();
-            _logger.LogInformation("Reduced stock for product {ProductId} by {Quantity}", productId, quantity);
+            logger.LogInformation("Reduced stock for product {ProductId} by {Quantity}", productId, quantity);
+        }
+
+        public async Task<OrderConfirmationViewModel> ProcessOrderAsync(CheckoutViewModel model)
+        {
+            logger.LogInformation("Processing full checkout for {Email}", model.Email);
+            var order = await PlaceOrderAsync(model);
+            await ReduceStockForOrderAsync(order);
+            var confirmationVm = CreateOrderConfirmationViewModel(order.OrderId, model);
+
+            return await confirmationVm;
         }
 
         public async Task<Order> PlaceOrderAsync(CheckoutViewModel model)
         {
-            _logger.LogInformation("Starting checkout for {Email}", model.Email);
+            logger.LogInformation("Starting checkout for {Email}", model.Email);
 
             var customer = await FindByEmailAsync(model.Email)
                            ?? await AddNewCustomerAsync(model);
@@ -122,7 +139,7 @@ namespace BetterGolfASP.Application.Services
 
             _unitOfWork.OrderRepository.Add(order);
             await _unitOfWork.SaveChangesAsync();
-            _logger.LogInformation("Order placed successfully for customer {Email}", customer.Email);
+            logger.LogInformation("Order placed successfully for customer {Email}", customer.Email);
             return order;
         }
     }
