@@ -1,6 +1,7 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
 
-    // Update cart count badge
+    // Fetches the current cart item count from the server and updates the cart count badge on the page.
+    // Logs an error to the console if the request fails.
     async function updateCartCount() {
         try {
             const response = await fetch('/ShoppingCart/GetCartCount', { credentials: 'same-origin' });
@@ -12,7 +13,8 @@
         }
     }
 
-    // Load cart partial HTML into offcanvas
+    // Loads the shopping cart HTML from the server and injects it into the page.
+    // Displays a loading message while fetching and an error message if the request
     async function loadCartHtml() {
         const placeholder = document.getElementById('cart-body-placeholder');
         if (!placeholder) return;
@@ -29,7 +31,9 @@
         }
     }
 
-    // Add product to cart
+    // Handles click events on "Add to Cart" buttons.
+    // Sends the selected product (and optional variant) to the server via POST,
+    // updates the cart contents and count on success, and logs errors if the request
     document.body.addEventListener('click', async function (e) {
         if (!e.target.classList.contains('add-to-cart')) return;
 
@@ -60,7 +64,9 @@
         }
     });
 
-    // Quantity buttons (+/-)
+    // Handles clicks on cart quantity buttons (increase/decrease).
+    // Sends the update request to the server, refreshes the cart HTML and count,
+    // and logs any errors if the update fails.
     document.body.addEventListener('click', async function (e) {
         if (!e.target.classList.contains('quantity-btn')) return;
 
@@ -90,7 +96,8 @@
         }
     });
 
-    // Thumbnail image switcher
+    // Enables thumbnail image switching on the product page.
+    // Clicking a thumbnail updates the main product image and highlights the active
     const thumbnails = document.querySelectorAll(".thumbnail-img");
     const mainImage = document.getElementById("mainProductImage");
     if (thumbnails.length && mainImage) {
@@ -104,7 +111,8 @@
         });
     }
 
-    //  Variant select + stock badge
+    // Manages product variant selection and stock status display.
+    // Updates the "Add to Cart" button and stock badge based on the selected variant’s availability.
     const variantSelect = document.getElementById("variantSelect");
     const addToCartBtn = document.querySelector(".add-to-cart");
     const stockBadge = document.getElementById("stockBadge");
@@ -143,8 +151,7 @@
         addToCartBtn.disabled = false;
     }
 
-    //  Initialize cart count on page load
-    updateCartCount();
+    
 
     // Load cart partial when offcanvas opens
     const cartOffcanvas = document.getElementById('cartOffcanvas');

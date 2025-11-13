@@ -34,11 +34,11 @@ html, body {
     padding: 0;
     width: 100%;
 }
-
+/*Hero picture*/
 .hero {
     position: relative;
     width: 100%;
-    height: 50vh; /* full screen height */
+    height: 50vh; 
     overflow: hidden;
 }
 
@@ -55,7 +55,7 @@ html, body {
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0,0,0,0.3); /* overlay för kontrast */
+        background: rgba(0,0,0,0.3); 
         z-index: 1;
     }
 
@@ -66,7 +66,7 @@ html, body {
 
 
 
-/*CATEGORY CARDS*/
+/*Category cards*/
 .category-card img {
     width: 100%; 
     height: 100%; 
@@ -99,7 +99,7 @@ html, body {
     font-size: 0.9rem;
 }
 
-/*PRODUCT CATEGORY CARDS*/
+/*Product category cards*/
 .product-image-wrapper {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -108,12 +108,12 @@ html, body {
         transform: scale(1.03);
         box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
-/* badgesize navbar */
+/* badge size navbar */
 #cart-count {
-    background-color: #28a745;  redan grön 
+    background-color: #28a745;  
     color: white;
-    border-radius: 50%;  rund 
-    padding: 0.25rem 0.37rem;  finjustera så höjd = bredd 
+    border-radius: 50%;  
+    padding: 0.25rem 0.37rem;  
     font-size: 0.65rem;
     font-weight: 600;
     transform: translate(-100%, -100%);
@@ -123,7 +123,7 @@ html, body {
 }
 
 
-/* Offcanvas-bredd */
+/* Off canvas-width */
 .offcanvas.offcanvas-end {
     max-width: 420px;
 }
@@ -180,7 +180,7 @@ html, body {
         align-items: center;
         gap: 0.5rem;
     }
-
+/*Description product image*/
 #mainProductImage {
     width: 400px; 
     height: 400px; 

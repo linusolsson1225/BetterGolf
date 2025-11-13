@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
 using BetterGolfASP.Infrastructure.DB;
 using BetterGolfASP.Domain.Models.Products;
 
@@ -7,13 +7,15 @@ namespace BetterGolfASP.Application.Services
     public class AdminService(ILogger<AdminService> logger, Context context, IWebHostEnvironment environment)
     {
         private readonly UoW _unitOfWork = new UoW(context);
-
+        
+        //Fetching a specific product from database
         public async Task<Product> GetProductAsync(int productId)
         {
             var product = await _unitOfWork.ProductRepository.GetByIdAsync(productId);
             return product ?? throw new KeyNotFoundException($"Could not find product with {productId}");
         }
-
+        
+        //Remove Selected imageUrl from a specific product and updates product image URL in database
         public async Task<Product> RemoveImageAsync(int productId, string imageUrl)
         {
             var product = await GetProductAsync(productId);
@@ -32,7 +34,9 @@ namespace BetterGolfASP.Application.Services
 
             return product;
         }
-
+        // Uploads an image file for a specific product.
+        // Saves the file to the server, updates the product’s image URLs in the database,
+        // and returns the URL of the uploaded image
         public async Task<string> UploadProductImageAsync(int productId, IFormFile file)
         {
             if (file == null || file.Length == 0)
@@ -52,7 +56,7 @@ namespace BetterGolfASP.Application.Services
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
             var filePath = Path.Combine(uploadsDir, fileName);
 
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            await using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
@@ -67,12 +71,12 @@ namespace BetterGolfASP.Application.Services
 
             return imageUrl;
         }
-
-
+        
+        //Getting all products to a list
         public async Task<List<Product>> GetAllProductsAsync()
         {
-            var clubs = await _unitOfWork.ProductRepository.GetAllAsync();
-            return clubs;
+            var products = await _unitOfWork.ProductRepository.GetAllAsync();
+            return products;
         }
     }
 }
